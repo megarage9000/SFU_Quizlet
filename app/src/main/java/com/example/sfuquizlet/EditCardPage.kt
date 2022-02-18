@@ -25,8 +25,8 @@ class EditCardPage : AppCompatActivity() {
         setContentView(view)
 
         var test = arrayOf(
-            ViewHelperClass("Edit Question", "Enter text"),
-            ViewHelperClass("Edit Card", "Enter text")
+            ViewHelperClass("Edit Question", "Enter text", emptyArray<String>()),
+            ViewHelperClass("Edit Card", "Enter text", emptyArray<String>())
             )
 
         var recyclerView = binding.recycler
@@ -35,12 +35,13 @@ class EditCardPage : AppCompatActivity() {
     }
 }
 
-data class ViewHelperClass(val title: String, var text: String)
+data class ViewHelperClass(val title: String, var text: String, var textArray: Array<String>)
 
+
+// For the whole view
 class EditCardRecycler(val array: Array<ViewHelperClass>,
                        context: Context,
                        layoutInflater: LayoutInflater) : RecyclerView.Adapter<RecyclerView.ViewHolder> () {
-
     val flairId = 0;
     val editFieldID = 1;
 
@@ -84,7 +85,6 @@ class EditCardRecycler(val array: Array<ViewHelperClass>,
     }
 
     override fun getItemCount(): Int = array.size
-
-
 }
+
 
