@@ -10,7 +10,7 @@
         android:layout_height="86dp"
         android:layout_marginVertical="5dp"
         android:background="@drawable/course_cardbg"
-        android:backgroundTint="#C2FDD6"
+        android:backgroundTint="#D6C5FF"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -28,7 +28,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/ManropeBold"
                 android:gravity="center_vertical"
-                android:text="IAT 359" />
+                android:text="MACM 101" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ManropeMedium"
-                android:text="18 Cards (2 New)" />
+                android:text="44 Cards (0 New)" />
         </LinearLayout>
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_width="29dp"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            android:backgroundTint="#42C581"
+            android:backgroundTint="#9B72FF"
             android:paddingHorizontal="12dp" />
 
     </LinearLayout>

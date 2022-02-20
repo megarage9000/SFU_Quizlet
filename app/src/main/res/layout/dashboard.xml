@@ -36,8 +36,8 @@
     <include
         layout="@layout/course_card" />
     <include
-        layout="@layout/course_card" />
+        layout="@layout/cc2" />
     <include
-        layout="@layout/course_card" />
+        layout="@layout/cc3" />
 
 </LinearLayout>
