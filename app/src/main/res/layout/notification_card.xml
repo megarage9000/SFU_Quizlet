@@ -6,12 +6,11 @@
 
     <LinearLayout
         android:id="@+id/newCardNotif"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="-2dp"
         android:layout_width="match_parent"
         android:layout_height="78dp"
         android:layout_marginVertical="5dp"
-        android:background="#0E78CC"
+        android:background="@drawable/course_cardbg"
+        android:backgroundTint="#0E78CC"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
         android:paddingVertical="12dp">
