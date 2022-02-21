@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/dashboardLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="14dp"
+    android:layout_marginVertical="8dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dashBoardTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ManropeBold"
+        android:text="DashBoard"
+        android:layout_marginBottom="5sp"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
+    <include
+        layout="@layout/notification_card" />
+
+    <include
+        layout="@layout/stats_bars" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:fontFamily="@font/ManropeBold"
+        android:text="Favourite Courses"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <include
+        layout="@layout/course_card" />
+    <include
+        layout="@layout/cc2" />
+    <include
+        layout="@layout/cc3" />
+
+</LinearLayout>
