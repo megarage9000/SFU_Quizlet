@@ -28,7 +28,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/ManropeBold"
                 android:gravity="center_vertical"
-                android:text="CMPT 473" />
+                android:text="CMPT 473"
+                android:textColor="#006CCA" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -36,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ManropeMedium"
-                android:text="33 Cards (5 New)" />
+                android:text="33 Cards (5 New)"
+                android:textColor="#006CCA" />
         </LinearLayout>
 
         <Button

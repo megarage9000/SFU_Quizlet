@@ -28,7 +28,8 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/ManropeBold"
                 android:gravity="center_vertical"
-                android:text="MACM 101" />
+                android:text="MACM 101"
+                android:textColor="#3E00D5" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -36,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ManropeMedium"
-                android:text="44 Cards (0 New)" />
+                android:text="44 Cards (0 New)"
+                android:textColor="#3E00D5" />
         </LinearLayout>
 
         <Button
