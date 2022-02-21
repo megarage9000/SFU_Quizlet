@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudyDeck">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/manrope_bold"
+        android:text="Study Deck"
+        android:textColor="@color/dark_grey"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="376dp"
+        android:layout_height="69dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/blue_widget_bg"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:weightSum="2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_bold"
+                android:text="IAT 359"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/manrope_medium"
+                android:text="45 Cards"
+                android:textColor="@color/blue"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:scaleType="fitEnd"
+            app:tint="@color/blue"
+            app:srcCompat="@drawable/ic_icon_bookmark_filled" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="0.75"
+        android:background="@android:color/transparent"
+        android:drawableRight="@drawable/ic_icon_chevron_down"
+        android:fontFamily="@font/manrope_bold"
+        android:text="Filter By"
+        android:textAllCaps="false"
+        android:textColor="@color/dark_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_bg"
+        android:backgroundTint="@color/blue"
+        android:fontFamily="@font/manrope_bold"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="2dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:shadowColor="@android:color/transparent"
+        android:text="Add New Card"
+        android:textAllCaps="false"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <LinearLayout
+        android:id="@+id/weight"
+        android:layout_width="379dp"
+        android:layout_height="539dp"
+        android:layout_marginTop="24dp"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_widget_bg"
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
+                android:orientation="horizontal"
+                android:weightSum="0">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/flair_bg"
+                    android:fontFamily="@font/manrope_medium"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="4dp"
+                    android:text="Chapter 1"
+                    android:textColor="@color/dark_grey" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/flair_bg"
+                    android:fontFamily="@font/manrope_medium"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="4dp"
+                    android:text="Fill in the Blanks"
+                    android:textColor="@color/dark_grey" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/flair_bg"
+                    android:fontFamily="@font/manrope_medium"
+                    android:paddingHorizontal="16dp"
+                    android:paddingVertical="4dp"
+                    android:text="Easy"
+                    android:textColor="@color/dark_grey" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.9"
+                android:fontFamily="@font/manrope_medium"
+                android:paddingVertical="24dp"
+                android:text="Rebecca Sear, Marketing Director of a regional restaurant chain, is directing a study to identify and assess the in-dining experience of the customers at one of the restaurants. She directs her staff to design a web-based market survey for distribution to all of the restaurant's 1265 customers who enjoyed a meal during the past 6 months. For this study, the set of 1265 customers is ________________."
+                android:textColor="@color/dark_grey"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/manrope_medium"
+                    android:text="Added by larrynguyen#098"
+                    android:textColor="@color/medium_grey"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="fitEnd"
+                        app:srcCompat="@drawable/ic_icon_edit" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_icon_trash" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
