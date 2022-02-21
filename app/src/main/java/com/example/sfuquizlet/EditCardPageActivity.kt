@@ -21,6 +21,9 @@ class EditCardPageActivity : AppCompatActivity() {
 
         binding.Title.text = titleName
         binding.SubmitButton.text = submitButtonName
+        binding.SubmitButton.setOnClickListener {
+            finish()
+        }
 
         var test = arrayOf(
             EditCardHelperClass("Question", "Enter text", ArrayList<String>()),

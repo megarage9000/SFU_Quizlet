@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +39,7 @@ class StudyDeckFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_study_deck, container, false)
         val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
-        val editCardButton = view.findViewById<Button>(R.id.EditCard)
+        val editCardButton = view.findViewById<ImageView>(R.id.EditCard)
 
         addCardButton.setOnClickListener {
             val intent = Intent(activity, EditCardPageActivity::class.java)
