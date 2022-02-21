@@ -13,10 +13,19 @@ class EditCardPage : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
+        val passedParams = intent.extras
+        val titleName = intent.getStringExtra("titleName")
+        val submitButtonName = intent.getStringExtra("submitButtonName")
+        val flairs = intent.getStringArrayListExtra("flairs")
+
+        binding.Title.text = titleName
+        binding.SubmitButton.text = submitButtonName
+
         var test = arrayOf(
-            EditCardHelperClass("Edit Question", "Enter text", ArrayList<String>()),
-            EditCardHelperClass("Edit Card", "Enter text", ArrayList<String>()),
-            EditCardHelperClass("Flairs", "Enter Flair", ArrayList<String>(arrayListOf("Midterm 1", "Quiz", "Neuroptics")))
+            EditCardHelperClass("Question", "Enter text", ArrayList<String>()),
+            EditCardHelperClass("Answer", "Enter text", ArrayList<String>()),
+            EditCardHelperClass("Flairs", "Enter Flair", flairs!!)
         )
 
         var recyclerView = binding.recycler
