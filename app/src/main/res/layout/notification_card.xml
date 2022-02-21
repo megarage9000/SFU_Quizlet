@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/ManropeBold"
+                android:fontFamily="@font/manrope_bold"
                 android:text="New Cards Today"
                 android:textColor="#FFFFFF" />
 
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/ManropeMedium"
+                android:fontFamily="@font/manrope_medium"
                 android:text="Some of your favourite courses have new cards!"
                 android:textColor="#FFFFFF"
                 android:textSize="11sp" />
@@ -45,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="54dp"
             android:layout_weight="1"
-            android:fontFamily="@font/ManropeBold"
+            android:fontFamily="@font/manrope_bold"
             android:gravity="center"
             android:text="14 Cards"
             android:textColor="#FFFFFF"

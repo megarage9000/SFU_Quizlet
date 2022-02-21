@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/ManropeBold"
+                android:fontFamily="@font/manrope_bold"
                 android:gravity="center_vertical"
                 android:text="IAT 359"
                 android:textColor="#00812B" />
@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/ManropeMedium"
+                android:fontFamily="@font/manrope_medium"
                 android:text="18 Cards (2 New)"
                 android:textColor="#00812B" />
         </LinearLayout>

@@ -10,7 +10,7 @@
         android:id="@+id/textView10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/ManropeBold"
+        android:fontFamily="@font/manrope_bold"
         android:text="Courses"
         android:layout_marginBottom="5sp"
         android:textColor="#000000"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5sp"
-        android:fontFamily="@font/ManropeMedium"
+        android:fontFamily="@font/manrope_medium"
         android:text="Discover study decks for any course at SFU"
         android:textColor="#000000"
         android:textSize="12sp"/>
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5sp"
-        android:fontFamily="@font/ManropeBold"
+        android:fontFamily="@font/manrope_bold"
         android:text="IAT"
         android:textColor="#000000"
         android:textSize="12sp"/>
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5sp"
-        android:fontFamily="@font/ManropeBold"
+        android:fontFamily="@font/manrope_bold"
         android:text="CMPT"
         android:textColor="#000000"
         android:textSize="12sp"/>
@@ -63,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5sp"
-        android:fontFamily="@font/ManropeBold"
+        android:fontFamily="@font/manrope_bold"
         android:text="MACM"
         android:textColor="#000000"
         android:textSize="12sp"/>
