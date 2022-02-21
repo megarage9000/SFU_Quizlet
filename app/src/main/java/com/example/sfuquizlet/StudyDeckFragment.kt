@@ -1,10 +1,12 @@
 package com.example.sfuquizlet
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,7 +36,26 @@ class StudyDeckFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_study_deck, container, false)
+        val view = inflater.inflate(R.layout.fragment_study_deck, container, false)
+        val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
+        val editCardButton = view.findViewById<Button>(R.id.EditCard)
+
+        addCardButton.setOnClickListener {
+            val intent = Intent(activity, EditCardPageActivity::class.java)
+            intent.putStringArrayListExtra("flairs", ArrayList<String>())
+            intent.putExtra("titleName", "Add New Card")
+            intent.putExtra("submitButtonName", "Add New Card")
+            startActivity(intent)
+        }
+
+        editCardButton.setOnClickListener {
+            val intent = Intent(activity, EditCardPageActivity::class.java)
+            intent.putStringArrayListExtra("flairs", ArrayList<String>(arrayListOf("Math", "Midterm 1")))
+            intent.putExtra("titleName", "Edit Card")
+            intent.putExtra("submitButtonName", "Update Card")
+            startActivity(intent)
+        }
+        return view
     }
 
     companion object {

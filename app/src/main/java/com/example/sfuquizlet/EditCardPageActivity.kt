@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.databinding.ActivityEditCardPageBinding
 
 lateinit var binding : ActivityEditCardPageBinding
-class EditCardPage : AppCompatActivity() {
+class EditCardPageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditCardPageBinding.inflate(layoutInflater)
