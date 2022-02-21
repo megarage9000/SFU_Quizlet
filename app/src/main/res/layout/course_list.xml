@@ -37,7 +37,8 @@
         android:textSize="12sp"/>
 
     <include
-        layout="@layout/course_card"/>
+        android:id="@+id/OpenStudyDeck"
+        layout="@layout/course_card" />
 
     <include
         layout="@layout/course_card"/>
