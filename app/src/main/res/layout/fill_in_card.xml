@@ -30,10 +30,10 @@
         android:ems="10"
         android:fontFamily="sans-serif-light"
         android:gravity="top|left"
+        android:hint="Enter text"
         android:inputType="textMultiLine|textPersonName"
         android:minHeight="48dp"
         android:padding="10dp"
-        android:text="Name"
         android:textSize="14sp" />
 
     <TextView
