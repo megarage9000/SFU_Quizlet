@@ -4,7 +4,7 @@ data class User(val id: String,
                 var username: String,
                 var deckIds: MutableList<String>,
                 var cardIds: MutableList<String>,
-                var cardsViewedIds: MutableSet<String>)
+                var cardsViewedIds: MutableList<String>)
 
 data class Deck(val id: String,
                 val name: String,

@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +19,9 @@ class MainActivity : AppCompatActivity() {
         const val EMAIL = "TommyJ@Jones.com"
         const val NAME = "Tommy Jones"
         const val PASS = "StrongPass1234@"
+
+        // access to root node
+        val database = Firebase.database
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
-        login() // SignInFragment.kt
+        login(this) // SignInFragment.kt
 
         val layoutInflator = LayoutInflater.from(this)
         val frameLayout = findViewById<FrameLayout>(R.id.frameLayoutID)
