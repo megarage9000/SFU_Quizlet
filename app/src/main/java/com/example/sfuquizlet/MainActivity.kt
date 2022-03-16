@@ -6,11 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        lateinit var auth: FirebaseAuth
+
+        // Placeholder data until we setup sign up feature
+        const val EMAIL = "TommyJ@Jones.com"
+        const val NAME = "Tommy Jones"
+        const val PASS = "StrongPass1234@"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        auth = FirebaseAuth.getInstance()
+        login() // SignInFragment.kt
 
         val layoutInflator = LayoutInflater.from(this)
         val frameLayout = findViewById<FrameLayout>(R.id.frameLayoutID)
