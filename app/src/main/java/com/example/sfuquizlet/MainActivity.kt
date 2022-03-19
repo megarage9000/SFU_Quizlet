@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import com.example.sfuquizlet.database.getUserFromDatabase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -35,6 +36,8 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         login(this) // SignInFragment.kt
 
+        seedDatabase()
+//        getUserFromDatabase()
 
         layoutInflator = LayoutInflater.from(this)
         frameLayout = findViewById(R.id.frameLayoutID)

@@ -2,9 +2,9 @@ package com.example.sfuquizlet
 
 data class User(val id: String,
                 var username: String,
-                var deckIds: MutableList<String>,
-                var cardIds: MutableList<String>,
-                var cardsViewedIds: MutableList<String>
+                var deckIds: MutableList<String> = mutableListOf(),
+                var cardIds: MutableList<String> = mutableListOf(),
+                var cardsViewedIds: MutableList<String> = mutableListOf()
 )
 
 data class Deck(val id: String,

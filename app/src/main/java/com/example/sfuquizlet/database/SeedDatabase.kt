@@ -8,7 +8,7 @@ import java.util.*
 // Dont call any of these functions. Will mess up the ids in the database. The database is already seeded
 
 fun seedDatabase() {
-//    seedDecks()
+    seedDecks()
 //    seedCards()
 //    seedFlairs()
 }
