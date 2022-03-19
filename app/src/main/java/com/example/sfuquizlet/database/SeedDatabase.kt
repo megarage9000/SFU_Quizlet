@@ -5,6 +5,8 @@ import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+// Dont call any of these functions. Will mess up the ids in the database. The database is already seeded
+
 fun seedDatabase() {
 //    seedDecks()
 //    seedCards()
@@ -40,11 +42,13 @@ fun seedDecks() {
 fun seedCards() {
     val user = MainActivity.auth.currentUser
 
+    // Cards for IAT 359 deck
     val card1 = Card(question = "what is Kotlin?", answer = "A programming language")
     val card2 = Card(question = "what is Android Studios used for?", answer = "develop mobile applications for Android")
     val card3 = Card(question = "whats the difference between recycler views and linear layouts?", answer = "recycler views are used for dynamic content")
     val card4 = Card(question = "whats an API vs SDK?", answer = "")
 
+    // Cards for CMPT 135 deck
     val card5 = Card(question = "what is a loop vs an if statement?", answer = "a loop checks a condition and does an action n times, an if statement checks a condition and does an action just once")
     val card6 = Card(question = "whats an array?", answer = "a collection of variables")
     val card7 = Card(question = "whats the difference between * and &?", answer = "basically opposites. * gets the value stored in a pointer, while & gets the physical address of a pointer")

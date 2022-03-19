@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
+import com.example.sfuquizlet.database.getCardsFromDatabase
+import com.example.sfuquizlet.database.getFlairsFromDatabase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -33,8 +35,8 @@ class MainActivity : AppCompatActivity() {
 
 //        seedDatabase()
 //        getAllDecks()
-//        getCardsFromList(mutableListOf("312f0f46-721a-44ac-bf87-1ecef6c5d829", "2b74b63a-ed5c-4c39-b997-93f790d623c6"))
-        getFlairsFromList(mutableListOf("38642d44-cee1-46b3-85b5-3920f10bd6a5", "7cd6d013-510e-40d4-bb7d-d271d2d68a25"))
+//        getCardsFromDatabase(mutableListOf("312f0f46-721a-44ac-bf87-1ecef6c5d829", "2b74b63a-ed5c-4c39-b997-93f790d623c6"))
+//        getFlairsFromDatabase(mutableListOf("38642d44-cee1-46b3-85b5-3920f10bd6a5", "7cd6d013-510e-40d4-bb7d-d271d2d68a25"))
 
         val layoutInflator = LayoutInflater.from(this)
         val frameLayout = findViewById<FrameLayout>(R.id.frameLayoutID)
