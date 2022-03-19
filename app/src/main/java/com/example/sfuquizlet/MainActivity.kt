@@ -36,9 +36,6 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         login(this) // SignInFragment.kt
 
-        seedDatabase()
-//        getUserFromDatabase()
-
         layoutInflator = LayoutInflater.from(this)
         frameLayout = findViewById(R.id.frameLayoutID)
         dashBoardView = layoutInflator.inflate(R.layout.dashboard, null)
