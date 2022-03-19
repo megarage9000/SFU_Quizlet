@@ -31,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         login(this) // SignInFragment.kt
 
+//        seedDatabase()
+//        getAllDecks()
+//        getCardsFromList(mutableListOf("312f0f46-721a-44ac-bf87-1ecef6c5d829", "2b74b63a-ed5c-4c39-b997-93f790d623c6"))
+        getFlairsFromList(mutableListOf("38642d44-cee1-46b3-85b5-3920f10bd6a5", "7cd6d013-510e-40d4-bb7d-d271d2d68a25"))
+
         val layoutInflator = LayoutInflater.from(this)
         val frameLayout = findViewById<FrameLayout>(R.id.frameLayoutID)
         val dashBoardView = layoutInflator.inflate(R.layout.dashboard, null)
