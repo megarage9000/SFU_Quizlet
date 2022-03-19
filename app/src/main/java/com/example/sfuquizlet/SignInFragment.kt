@@ -34,13 +34,6 @@ fun putUserInDatabase() {
         .setValue(user, completionListener)
 }
 
-fun getCompletionListener() : DatabaseReference.CompletionListener {
-    return DatabaseReference.CompletionListener {err, ref ->
-        if(err != null) {
-            Log.i("DATABASE", listOf(err).toString())
-        }
-    }
-}
 fun getCurrentUser() : User {
     val id = MainActivity.auth.currentUser!!.uid
     val name = MainActivity.auth.currentUser!!.displayName
@@ -87,8 +80,4 @@ fun setFirstSignUp(status: Boolean, context: Context) {
 fun isFirstSignUp(context: Context) : Boolean {
     val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
     return sharedPref.getBoolean(PREFS_VAR_NAME, false)
-}
-
-fun MainActivity.toastMessage(str: String) {
-    Toast.makeText(this, str, Toast.LENGTH_LONG).show()
 }

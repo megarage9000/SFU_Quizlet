@@ -24,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         val database = Firebase.database
     }
 
+    lateinit var  layoutInflator: LayoutInflater
+    lateinit var  frameLayout: FrameLayout
+    lateinit var dashBoardView: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -31,17 +35,28 @@ class MainActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         login(this) // SignInFragment.kt
 
-        val layoutInflator = LayoutInflater.from(this)
-        val frameLayout = findViewById<FrameLayout>(R.id.frameLayoutID)
-        val dashBoardView = layoutInflator.inflate(R.layout.dashboard, null)
+
+        layoutInflator = LayoutInflater.from(this)
+        frameLayout = findViewById(R.id.frameLayoutID)
+        dashBoardView = layoutInflator.inflate(R.layout.dashboard, null)
+
         frameLayout.addView(dashBoardView)
 
+        initializeNavBarHomeBtn()
+        initializeNavBarCoursesBtn()
+        initializeNavBarProfileBtn()
+
+    }
+
+    private fun initializeNavBarHomeBtn() {
         val navBarHomeButton = findViewById<ImageView>(R.id.navBarHomeID)
         navBarHomeButton.setOnClickListener {
             frameLayout.removeAllViews()
             frameLayout.addView(layoutInflator.inflate(R.layout.dashboard, null))
         }
+    }
 
+    private fun initializeNavBarCoursesBtn() {
         val navBarCoursesButton = findViewById<ImageView>(R.id.navBarCoursesID)
         navBarCoursesButton.setOnClickListener {
             frameLayout.removeAllViews()
@@ -56,7 +71,9 @@ class MainActivity : AppCompatActivity() {
             }
             frameLayout.addView(courseListView)
         }
+    }
 
+    private fun initializeNavBarProfileBtn() {
         val navBarProfileButton = findViewById<ImageView>(R.id.navBarProfileID)
         navBarProfileButton.setOnClickListener {
             frameLayout.removeAllViews()

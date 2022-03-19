@@ -4,24 +4,29 @@ data class User(val id: String,
                 var username: String,
                 var deckIds: MutableList<String>,
                 var cardIds: MutableList<String>,
-                var cardsViewedIds: MutableList<String>)
+                var cardsViewedIds: MutableList<String>
+)
 
 data class Deck(val id: String,
-                val name: String,
-                val instructor: String,
+                val department: String,
+                val courseNumber: String,
                 var semester: String,
-                var cardIds: MutableList<String>,
-                var flairIds: MutableList<String>)
+                var year: String,
+                val instructor: String,
+                var cardIds: MutableList<String> = mutableListOf(),
+                var flairIds: MutableList<String> = mutableListOf()
+)
 
-data class Card(val id: String,
-                val deckId: String,
-                var question: String,
-                var answer: String,
-                var flairIds: MutableSet<String>,
-                var timestamp: String,
-                var userId: String)
+data class Card(
+    var id: String = "",
+    var question: String,
+    var answer: String,
+    var flairIds: MutableList<String> = mutableListOf(),
+    var timestamp: String = "",
+    var authorId: String = ""
+)
 
 data class Flair(val id: String,
-                 val deckId: String,
-                 val title: String)
+                 val title: String
+)
 
