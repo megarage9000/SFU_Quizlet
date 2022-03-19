@@ -9,6 +9,7 @@ data class User(val id: String,
 data class Deck(val id: String,
                 val name: String,
                 val instructor: String,
+                var semester: String,
                 var cardIds: MutableList<String>,
                 var flairIds: MutableList<String>)
 
@@ -17,10 +18,10 @@ data class Card(val id: String,
                 var question: String,
                 var answer: String,
                 var flairIds: MutableSet<String>,
-                var timestamp: String)
+                var timestamp: String,
+                var userId: String)
 
 data class Flair(val id: String,
                  val deckId: String,
-                 val title: String,
-                 val color: String)
+                 val title: String)
 
