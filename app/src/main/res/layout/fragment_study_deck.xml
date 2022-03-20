@@ -10,9 +10,7 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
         android:fontFamily="@font/manrope_bold"
         android:text="Study Deck"
         android:textColor="@color/dark_grey"
@@ -24,11 +22,9 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="376dp"
+        android:layout_width="0dp"
         android:layout_height="69dp"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:background="@drawable/blue_widget_bg"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
@@ -71,8 +67,8 @@
             android:layout_gravity="right"
             android:layout_weight="1"
             android:scaleType="fitEnd"
-            app:tint="@color/blue"
-            app:srcCompat="@drawable/ic_icon_bookmark_filled" />
+            app:srcCompat="@drawable/ic_icon_bookmark_filled"
+            app:tint="@color/blue" />
     </LinearLayout>
 
     <Button
@@ -80,7 +76,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_weight="0.75"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/ic_icon_chevron_down"
@@ -95,7 +90,6 @@
         android:id="@+id/AddNewCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:background="@drawable/button_bg"
@@ -108,13 +102,14 @@
         android:shadowColor="@android:color/transparent"
         android:text="Add New Card"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <LinearLayout
         android:id="@+id/weight"
-        android:layout_width="379dp"
+        android:layout_width="0dp"
         android:layout_height="539dp"
         android:layout_marginTop="24dp"
         android:orientation="vertical"
