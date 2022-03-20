@@ -100,7 +100,6 @@ class EditCardRecycler (val array: Array<EditCardHelperClass>,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         when(viewType) {
             editFieldID -> {
-                val inflator = LayoutInflater.from(parent.context)
                 val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     800
