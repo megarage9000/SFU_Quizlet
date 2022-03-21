@@ -6,18 +6,20 @@
     android:id="@+id/ConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context=".EditCardPageActivity">
 
     <TextView
         android:id="@+id/Title"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_margin="0dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-medium"
+        android:paddingTop="10dp"
         android:text="Title"
         android:textColor="#000000"
         android:textSize="34sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

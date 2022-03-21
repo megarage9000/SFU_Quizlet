@@ -82,7 +82,6 @@ class EditCardRecycler (val array: Array<EditCardHelperClass>,
             val submit = this.itemView.findViewById<TextView>(R.id.FlairSubmit)
             val flairList = this.itemView.findViewById<RecyclerView>(R.id.FlairList)
             submit.setOnClickListener {
-                Log.d("Flair add", "adding " + inputField.text.toString())
                 (flairList.adapter as FlairViewReycler).addItem(
                     inputField.text.toString()
                 )
@@ -98,23 +97,26 @@ class EditCardRecycler (val array: Array<EditCardHelperClass>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context);
+        // Switching between card types
         when(viewType) {
+            // Input field view
             editFieldID -> {
                 val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    800
+                    600
                 )
-                val view = inflator.inflate(R.layout.fill_in_card, parent, false)
+                val view =  inflater.inflate(R.layout.fill_in_card, parent, false)
                 view.layoutParams = layoutParams
                 return FillInHolder(view, 250)
             }
             else -> {
-                val inflator = LayoutInflater.from(parent.context)
+                // Flair input field view
                 val layoutParams: ViewGroup.LayoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-                val view = inflator.inflate(R.layout.flair_input, parent, false)
+                val view = inflater.inflate(R.layout.flair_input, parent, false)
                 view.layoutParams = layoutParams
                 return FlairEditorHolder(view, parent.context)
             }
