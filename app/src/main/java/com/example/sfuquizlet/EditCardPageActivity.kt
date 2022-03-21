@@ -1,12 +1,15 @@
 package com.example.sfuquizlet
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.databinding.ActivityEditCardPageBinding
 
 lateinit var binding : ActivityEditCardPageBinding
+
 class EditCardPageActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditCardPageBinding.inflate(layoutInflater)
@@ -35,8 +38,26 @@ class EditCardPageActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = EditCardRecycler(test, this, layoutInflater)
     }
+
+    companion object {
+        var isEdit: Boolean = false
+        fun OpenEditCard(context: Context, cardId: String, deckId: String) {
+            isEdit = true;
+
+        }
+
+        fun OpenAddCard(context: Context, deckId: String) {
+            isEdit = false;
+
+        }
+    }
+
 }
-data class EditCardHelperClass(val title: String, var text: String, var textArray: ArrayList<String>)
+data class EditCardHelperClass(
+    val title: String,
+    var text: String,
+    var textArray: ArrayList<String>
+    )
 
 
 

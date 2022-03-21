@@ -48,4 +48,8 @@ class FlairViewReycler(val array: ArrayList<String>, context: Context, layoutInf
         notifyItemInserted(array.size - 1);
     }
 
+    fun getFlairItems(): ArrayList<String> {
+        return array;
+    }
+
 }
