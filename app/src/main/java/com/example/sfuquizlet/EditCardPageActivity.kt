@@ -44,7 +44,7 @@ class EditCardPageActivity : AppCompatActivity() {
 
         QuestionContent = FillInCards("Question", "Enter Question", "", this, binding.QuestionView)
         AnswerContent = FillInCards("Answer", "Enter Answer", "", this, binding.AnswerView)
-        FlairView = FlairEditor(this, arrayListOf(""), binding.FlairView)
+        FlairView = FlairEditor(this, hashMapOf("Hello" to "YOOOOOO"), binding.FlairView)
     }
 
     companion object {
@@ -121,7 +121,7 @@ class FillInCards(private val title: String, private val textHint: String, var t
 }
 
 // For the Flair editor
-class FlairEditor(val context: Context, private val flairs: ArrayList<String>, val parent: FrameLayout) {
+class FlairEditor(val context: Context, private val flairs: HashMap<String, String>, val parent: FrameLayout) {
     var view: View
     init {
         // Create the view and set the view

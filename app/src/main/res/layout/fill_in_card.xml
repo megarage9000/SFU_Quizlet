@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_weight="20"
-        android:background="@drawable/edit_text_bg"
+        android:background="@drawable/flair_bg"
         android:ems="10"
         android:fontFamily="@font/manrope_medium"
         android:gravity="top|left"

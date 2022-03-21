@@ -43,7 +43,7 @@
                 android:id="@+id/SubmitButton"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/submit_button_bg"
                 android:fontFamily="sans-serif-medium"
                 android:gravity="center"

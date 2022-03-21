@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.HashMap
 
 interface Remover {
     fun onRemove()
 }
 
 // For the flair page
-class FlairViewReycler(val array: ArrayList<String>, context: Context, layoutInflater: LayoutInflater) :
+class FlairViewReycler(val flairs: HashMap<String, String>, context: Context, layoutInflater: LayoutInflater) :
     RecyclerView.Adapter<FlairViewReycler.FlairViewHolder>(){
 
     class FlairViewHolder(val view: View, pos: Int) : RecyclerView.ViewHolder(view){
@@ -34,22 +36,24 @@ class FlairViewReycler(val array: ArrayList<String>, context: Context, layoutInf
     override fun onBindViewHolder(holder: FlairViewHolder, position: Int) {
         val view = holder.itemView.findViewById<View>(R.id.FlairDelete)
         val text = holder.itemView.findViewById<TextView>(R.id.FlairText)
-        text.text = array[position]
+        val key = flairs.keys.toTypedArray()[position]
+        text.text = flairs[key]
         view.setOnClickListener {
-            array.removeAt(position)
+            flairs.remove(key)
             this.notifyDataSetChanged()
         }
 
     }
-    override fun getItemCount() = array.size
+    override fun getItemCount() = flairs.size
 
     fun addItem(flairName: String) {
-        array.add(flairName)
-        notifyItemInserted(array.size - 1);
+        val id = UUID.randomUUID().toString()
+        flairs[id] = flairName
+        notifyItemInserted(flairs.size - 1);
     }
 
-    fun getFlairItems(): ArrayList<String> {
-        return array;
+    fun getFlairItems(): HashMap<String, String> {
+        return flairs;
     }
 
 }

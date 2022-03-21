@@ -32,10 +32,10 @@
             android:id="@+id/FlairNameInput"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
             android:layout_weight="1"
-            android:background="@drawable/edit_text_bg"
+            android:background="@drawable/flair_bg"
             android:ems="10"
             android:fontFamily="@font/manrope_medium"
             android:inputType="textPersonName"
@@ -54,7 +54,8 @@
             android:clickable="true"
             android:fontFamily="@font/manrope_medium"
             android:gravity="center"
-            android:text="Submit" />
+            android:text="Submit"
+            android:textColor="#455A64" />
 
     </LinearLayout>
 
