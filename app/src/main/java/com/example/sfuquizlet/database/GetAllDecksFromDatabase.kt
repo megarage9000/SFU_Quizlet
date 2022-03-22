@@ -5,6 +5,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
+// Listener for outside functions to be
+// notified when new data comes in
 interface DecksListener {
     fun onDecksArrived(deck: Map<String, List<Deck>>)
 }

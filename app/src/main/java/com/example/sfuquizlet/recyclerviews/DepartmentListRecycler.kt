@@ -15,7 +15,7 @@ import com.example.sfuquizlet.R
 
 // Interface to call events on the card deck views
 interface CardDeckViewListener {
-    fun onDeckPressed(department: String, deck: Deck, position: Int)
+    fun onDeckPressed(department: String, deck: Deck, position: Int, color: ColorPairing)
 
     // Modify this if needed for favourites
     fun onFavouritesPressed(deck: Deck)
@@ -27,24 +27,26 @@ class DepartmentListRecycler(private val department: String,
                              private val departmentCourses: List<Deck>,
                              private val viewListener: CardDeckViewListener,
                              val context: Context,
-                             val color: Int) : RecyclerView.Adapter<DepartmentListRecycler.DepartmentCourseHolder>(){
+                             val color: ColorPairing) : RecyclerView.Adapter<DepartmentListRecycler.DepartmentCourseHolder>(){
 
+    // This view holder is specific to course_card.xml
     class DepartmentCourseHolder(
         private val department: String,
         view: View)
         : RecyclerView.ViewHolder(view) {
 
-            fun setData(color: Int, deck: Deck, viewListener: CardDeckViewListener, position: Int) {
+            fun setData(color: ColorPairing, deck: Deck, viewListener: CardDeckViewListener, position: Int) {
 
                 val view = this.itemView
                 // Set the view on click listener
                 view.setOnClickListener {
-                    viewListener.onDeckPressed(department, deck, position)
+                    viewListener.onDeckPressed(department, deck, position, color)
                 }
 
                 // Set the course number
                 val title = view.findViewById<TextView>(R.id.courseTitle)
                 title.text = department + deck.courseNumber
+
                 // Set the number of cards
                 // - Not sure how to add updated cards
                 val numCards = view.findViewById<TextView>(R.id.courseNumCards)
@@ -54,7 +56,7 @@ class DepartmentListRecycler(private val department: String,
                 // Setting the tint for background
                 // - src: https://www.codegrepper.com/code-examples/java/how+to+change+background+tint+color+programmatically+android
                 var drawable = DrawableCompat.wrap(view.background)
-                DrawableCompat.setTint(drawable, color)
+                DrawableCompat.setTint(drawable, color.primary)
                 view.background = drawable
 
                 // The favourite button
@@ -66,7 +68,7 @@ class DepartmentListRecycler(private val department: String,
                 }
 
                 // Darken the color of the text, button
-                val darkerColor = darkenColour(color)
+                val darkerColor = color.secondary
                 title.setTextColor(darkerColor)
                 numCards.setTextColor(darkerColor)
 

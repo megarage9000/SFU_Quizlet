@@ -11,12 +11,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.Deck
 import com.example.sfuquizlet.R
 
+
+
+data class ColorPairing(val primary: Int, val secondary: Int)
+
 // A color list to color code each department
 // Feel free to add more!
 val colorLists = arrayOf(
-    Color.parseColor("#C2FDD6"),
-    Color.parseColor("#A7D6FF"),
-    Color.parseColor("#D6C5FF")
+    ColorPairing(
+        Color.parseColor("#C2FDD6"),
+        Color.parseColor("#00812B")
+    ),
+    ColorPairing(
+        Color.parseColor("#A7D6FF"),
+        Color.parseColor("#006CCA")
+    ),
+    ColorPairing(
+        Color.parseColor("#D6C5FF"),
+        Color.parseColor("#3E00D5")
+    )
 )
 
 // Recycler view to store courses, assorted by their department
@@ -33,7 +46,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
         // Sets the content of a department_list.xml
         fun setContent(departmentName: String,
                        decks: List<Deck>,
-                       color: Int) {
+                       color: ColorPairing) {
             val view = this.itemView
             // Sets the title of the department_list.xml
             view.findViewById<TextView>(R.id.departmentHeader).text = departmentName
@@ -62,6 +75,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
         if(departmentCourses != null){
 
             // Assign a color to each department
+            // May be reused
             val color = colorLists[position % colorLists.size]
             holder.setContent(department, departmentCourses, color)
         }

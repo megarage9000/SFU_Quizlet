@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.databinding.CourseListBinding
 import com.example.sfuquizlet.recyclerviews.CardDeckViewListener
+import com.example.sfuquizlet.recyclerviews.ColorPairing
 import com.example.sfuquizlet.recyclerviews.CoursesListRecyclerView
 
 
@@ -49,7 +50,7 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         binding.coursesRecycler.adapter = CoursesListRecyclerView(allDecks, this, context)
     }
 
-    override fun onDeckPressed(department: String, deck: Deck, position: Int) {
+    override fun onDeckPressed(department: String, deck: Deck, position: Int, color: ColorPairing) {
         Log.d("Got Deck: ", deck.toString())
         Log.d("Deck Department: ", department)
         Log.d("Deck Position: ", position.toString())
