@@ -39,14 +39,22 @@ class EditCardPageActivity : AppCompatActivity() {
 
         val deckId = intent.getStringExtra("deckId")
         val cardId: String? = intent.getStringExtra("cardId")
-        val titleName = intent.getStringExtra("titleName")
-        val submitButtonName = intent.getStringExtra("submitButtonName")
+//        val titleName = intent.getStringExtra("titleName")
+//        val submitButtonName = intent.getStringExtra("submitButtonName")
 
-        binding.Title.text = titleName
-        binding.SubmitButton.text = submitButtonName
+        binding.Title.text = "Add Card"
+        binding.SubmitButton.text = "Add Card"
         binding.SubmitButton.setOnClickListener {
-            // Add an update here, may need an interface
             finish()
+        }
+
+        if(cardId == null){
+            card = Card(
+                "",
+                "",
+                "",
+                mutableListOf()
+            )
         }
 
         val answer: String = card.answer
