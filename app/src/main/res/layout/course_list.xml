@@ -26,54 +26,10 @@
         android:textColor="#000000"
         android:textSize="12sp"/>
 
-    <TextView
-        android:id="@+id/iatHeader"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/coursesRecycler"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5sp"
-        android:fontFamily="@font/manrope_bold"
-        android:text="IAT"
-        android:textColor="#000000"
-        android:textSize="12sp"/>
-
-    <include
-        android:id="@+id/OpenStudyDeck"
-        layout="@layout/course_card" />
-
-    <include
-        layout="@layout/course_card"/>
-
-    <TextView
-        android:id="@+id/cmptHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5sp"
-        android:fontFamily="@font/manrope_bold"
-        android:text="CMPT"
-        android:textColor="#000000"
-        android:textSize="12sp"/>
-
-    <include
-        layout="@layout/cc2"/>
-
-    <include
-        layout="@layout/cc2"/>
-
-    <TextView
-        android:id="@+id/macmHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5sp"
-        android:fontFamily="@font/manrope_bold"
-        android:text="MACM"
-        android:textColor="#000000"
-        android:textSize="12sp"/>
-
-    <include
-        layout="@layout/cc3"/>
-
-    <include
-        layout="@layout/cc3"/>
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

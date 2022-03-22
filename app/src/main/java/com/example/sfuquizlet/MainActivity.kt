@@ -60,16 +60,20 @@ class MainActivity : AppCompatActivity() {
         val navBarCoursesButton = findViewById<ImageView>(R.id.navBarCoursesID)
         navBarCoursesButton.setOnClickListener {
             frameLayout.removeAllViews()
-            val courseListView = layoutInflator.inflate(R.layout.course_list, null)
-            val testView = courseListView.findViewById<View>(R.id.OpenStudyDeck)
-            testView.setOnClickListener {
-                frameLayout.removeAllViews()
-                supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.frameLayoutID, StudyDeckFragment())
-                    .commit()
-            }
-            frameLayout.addView(courseListView)
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frameLayoutID, CoursesListFragment())
+                .commit()
+//            val courseListView = layoutInflator.inflate(R.layout.course_list, null)
+//            val testView = courseListView.findViewById<View>(R.id.OpenStudyDeck)
+//            testView.setOnClickListener {
+//                frameLayout.removeAllViews()
+//                supportFragmentManager
+//                    .beginTransaction()
+//                    .replace(R.id.frameLayoutID, StudyDeckFragment())
+//                    .commit()
+//            }
+//            frameLayout.addView(courseListView)
         }
     }
 

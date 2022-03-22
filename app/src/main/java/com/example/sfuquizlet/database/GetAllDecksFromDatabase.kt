@@ -5,7 +5,11 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-fun getAllDecksFromDatabase(): ArrayList<Deck> {
+interface DecksListener {
+    fun onDecksArrived(deck: Map<String, List<Deck>>)
+}
+
+fun getAllDecksFromDatabase(decksListener: DecksListener): ArrayList<Deck> {
     // Step 1
     val returnList = arrayListOf<Deck>()
 
@@ -41,11 +45,15 @@ fun getAllDecksFromDatabase(): ArrayList<Deck> {
                 // Add item to array
                 returnList.add(newDeck)
             }
+            val returnList = returnList.groupBy { it.department }
+            decksListener.onDecksArrived(returnList)
         }
         // Probably just ignore this for now, may add this later if we wanna do error checking
         override fun onCancelled(error: DatabaseError) {
 
         }
+
+
     }
 
     // Step 2

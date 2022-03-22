@@ -29,8 +29,7 @@ class EditCardPageActivity : AppCompatActivity() {
     lateinit var QuestionContent: FillInCards
     lateinit var AnswerContent: FillInCards
     lateinit var FlairView: FlairEditor
-    lateinit var card: Card
-    lateinit var deck: Deck
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,41 +45,13 @@ class EditCardPageActivity : AppCompatActivity() {
         binding.Title.text = titleName
         binding.SubmitButton.text = submitButtonName
         binding.SubmitButton.setOnClickListener {
-            // Add an update here
-            updateDatabase()
+            // Add an update here, may need an interface
             finish()
         }
 
-        lateinit var answer: String
-        lateinit var question: String
-        lateinit var flairs: MutableList<Flair>
-
-        if(deckId != null){
-            val decks = getDecksFromDatabase(mutableListOf(deckId))
-            if(decks.size > 0) {
-                deck = decks[0]
-            }
-        }
-
-        // Edit card
-        if(cardId != null) {
-            val cards = getCardsFromDatabase(mutableListOf(cardId))
-            if(cards.isNotEmpty()) {
-                card = cards[0]
-            }
-        }
-        // Add card
-        else{
-            card = Card(
-                "",
-                "",
-                "",
-                mutableListOf()
-            )
-        }
-        answer = card.answer
-        question = card.question
-        flairs = getFlairsFromDatabase(card.flairIds)
+        val answer: String = card.answer
+        val question: String = card.question
+        val flairs: MutableList<Flair> = getFlairsFromDatabase(card.flairIds)
 
         QuestionContent = FillInCards("Question", "Enter Question", question, this, binding.QuestionView)
         AnswerContent = FillInCards("Answer", "Enter Answer", answer, this, binding.AnswerView)
@@ -88,60 +59,31 @@ class EditCardPageActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun OpenEditCard(context: Context, cardId: String, deckId: String) {
+        lateinit var card: Card
+
+        lateinit var deck: Deck
+
+        fun OpenEditCard(context: Context, _card: Card, _deck: Deck) {
             val intent = Intent(context, EditCardPageActivity::class.java)
-            intent.putExtra("deckId", deckId)
-            intent.putExtra("cardId", cardId)
+            card = _card
+            deck = _deck
             intent.putExtra("titleName", "Edit Card")
             intent.putExtra("submitButtonName", "Save Card")
             context.startActivity(intent)
         }
 
-        fun OpenAddCard(context: Context, deckId: String) {
+        fun OpenAddCard(context: Context, _deck: Deck) {
             val intent = Intent(context, EditCardPageActivity::class.java)
-            intent.putExtra("deckId", deckId)
+            card = Card(
+                "",
+                "",
+                "",
+                mutableListOf()
+            )
+            deck = _deck
             intent.putExtra("titleName", "Edit Card")
             intent.putExtra("submitButtonName", "Save Card")
             context.startActivity(intent)
-        }
-    }
-
-    fun updateDatabase() {
-        // If the card doesn't have an id, add it
-        if(card.id == ""){
-            card.id = UUID.randomUUID().toString()
-        }
-        card.answer = AnswerContent.getContent()
-        card.question = QuestionContent.getContent()
-        val flairs = FlairView.getFlairs()
-        val flairIds = card.flairIds
-
-        // Checks flairs from the activity,
-        // and flairs from the card to see
-        // if new flairs are added
-        for(flair in flairs) {
-            if(flair.id !in flairIds) {
-                // Update the flair id list
-                // and insert flair to database
-                flairIds.add(flair.id)
-                insertFlair(flair)
-            }
-        }
-        // Set flair ids to the new set of flair ids
-        card.flairIds = flairIds
-        insertCard(card)
-
-        // Update the deck as well
-        if(deck != null) {
-            val deckFlairs = deck.flairIds
-            val cardFlairs = card.flairIds
-            for(cardFlair in cardFlairs) {
-                if(cardFlair !in deckFlairs) {
-                    deckFlairs.add(cardFlair)
-                }
-            }
-            deck.flairIds = deckFlairs
-            insertDeck(deck)
         }
     }
 }
