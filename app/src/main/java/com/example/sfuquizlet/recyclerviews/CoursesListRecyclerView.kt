@@ -1,20 +1,23 @@
-package com.example.sfuquizlet
+package com.example.sfuquizlet.recyclerviews
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.sfuquizlet.Deck
+import com.example.sfuquizlet.R
 
 // Stores all the courses into several
 
 val colorLists = arrayOf(
-    Color.valueOf(0xC2FDD6),
-    Color.valueOf(0xA7D6FF),
-    Color.valueOf(0xD6C5FF)
+    Color.parseColor("#C2FDD6"),
+    Color.parseColor("#A7D6FF"),
+    Color.parseColor("#D6C5FF")
 )
 
 // Recycler view to store courses, assorted by their department
@@ -30,7 +33,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
         // Sets the content of a department_list.xml
         fun setContent(departmentName: String,
                        decks: List<Deck>,
-                       color: Color) {
+                       color: Int) {
             val view = this.itemView
             // Sets the title of the department_list.xml
             view.findViewById<TextView>(R.id.departmentHeader).text = departmentName
@@ -38,7 +41,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
             // Creates a recycler view of the associated decks with the department
             val recyclerView = view.findViewById<RecyclerView>(R.id.departmentRecycler)
             recyclerView.layoutManager = LinearLayoutManager(parent.context)
-            recyclerView.adapter = DepartmentListRecycler(decks, parent.context, inflater, color)
+            recyclerView.adapter = DepartmentListRecycler(departmentName, decks, parent.context, inflater, color)
         }
     }
 
@@ -58,6 +61,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
         val departmentCourses = departmentGroups[department]
         if(departmentCourses != null){
             val color = colorLists[position % colorLists.size]
+            Log.d("Color set to: At position ", color.toString() + position.toString())
             holder.setContent(department, departmentCourses, color)
         }
     }

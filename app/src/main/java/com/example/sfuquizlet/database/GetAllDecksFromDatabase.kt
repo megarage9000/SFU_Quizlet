@@ -45,7 +45,9 @@ fun getAllDecksFromDatabase(decksListener: DecksListener): ArrayList<Deck> {
                 // Add item to array
                 returnList.add(newDeck)
             }
+            // Aggregation by department
             val returnList = returnList.groupBy { it.department }
+            // Call the listener when results arrive
             decksListener.onDecksArrived(returnList)
         }
         // Probably just ignore this for now, may add this later if we wanna do error checking
