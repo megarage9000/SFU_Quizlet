@@ -14,8 +14,8 @@ interface Remover {
 }
 
 // For the flair page
-class FlairViewReycler(val flairs: HashMap<String, String>, context: Context, layoutInflater: LayoutInflater) :
-    RecyclerView.Adapter<FlairViewReycler.FlairViewHolder>(){
+class FlairViewRecycler(val flairs: MutableList<Flair>, context: Context, layoutInflater: LayoutInflater) :
+    RecyclerView.Adapter<FlairViewRecycler.FlairViewHolder>(){
 
     class FlairViewHolder(val view: View, pos: Int) : RecyclerView.ViewHolder(view){
         var pos : Int
@@ -36,10 +36,9 @@ class FlairViewReycler(val flairs: HashMap<String, String>, context: Context, la
     override fun onBindViewHolder(holder: FlairViewHolder, position: Int) {
         val view = holder.itemView.findViewById<View>(R.id.FlairDelete)
         val text = holder.itemView.findViewById<TextView>(R.id.FlairText)
-        val key = flairs.keys.toTypedArray()[position]
-        text.text = flairs[key]
+        text.text = flairs[position].title
         view.setOnClickListener {
-            flairs.remove(key)
+            flairs.removeAt(position)
             this.notifyDataSetChanged()
         }
 
@@ -48,11 +47,11 @@ class FlairViewReycler(val flairs: HashMap<String, String>, context: Context, la
 
     fun addItem(flairName: String) {
         val id = UUID.randomUUID().toString()
-        flairs[id] = flairName
+        flairs.add(Flair(id, flairName))
         notifyItemInserted(flairs.size - 1);
     }
 
-    fun getFlairItems(): HashMap<String, String> {
+    fun getFlairItems(): MutableList<Flair> {
         return flairs;
     }
 

@@ -42,19 +42,18 @@ class StudyDeckFragment : Fragment() {
         val editCardButton = view.findViewById<ImageView>(R.id.EditCard)
 
         addCardButton.setOnClickListener {
-            val intent = Intent(activity, EditCardPageActivity::class.java)
-            intent.putStringArrayListExtra("flairs", ArrayList<String>())
-            intent.putExtra("titleName", "Add New Card")
-            intent.putExtra("submitButtonName", "Add New Card")
-            startActivity(intent)
+            // John: This was auto filled, I kind of don't know what this is
+            // - But it null checks the context
+            container?.let { it1 -> EditCardPageActivity.OpenAddCard(it1.context,
+                "4f47a3bf-3686-4ef0-99ed-cc5550d5b76b") }
         }
 
         editCardButton.setOnClickListener {
-            val intent = Intent(activity, EditCardPageActivity::class.java)
-            intent.putStringArrayListExtra("flairs", ArrayList<String>(arrayListOf("Math", "Midterm 1")))
-            intent.putExtra("titleName", "Edit Card")
-            intent.putExtra("submitButtonName", "Update Card")
-            startActivity(intent)
+            // John: This was auto filled, I kind of don't know what this is
+            // - But it null checks the context
+            container?.let { it1 -> EditCardPageActivity.OpenEditCard(it1.context,
+                "00006e51-058b-4a59-b5e7-bbbdc9ab00a4",
+                "4f47a3bf-3686-4ef0-99ed-cc5550d5b76b") }
         }
         return view
     }
