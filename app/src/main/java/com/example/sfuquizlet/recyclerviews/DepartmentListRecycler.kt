@@ -45,7 +45,7 @@ class DepartmentListRecycler(private val department: String,
 
                 // Set the course number
                 val title = view.findViewById<TextView>(R.id.courseTitle)
-                title.text = department + deck.courseNumber
+                title.text = department + " " + deck.courseNumber
 
                 // Set the number of cards
                 // - Not sure how to add updated cards

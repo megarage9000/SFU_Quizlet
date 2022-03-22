@@ -47,9 +47,14 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         dialog.hide()
         val context = this.requireContext()
         binding.coursesRecycler.layoutManager = LinearLayoutManager(context)
+
+        // Creating the recycler view for course list
+        // - Note that we are passing this as a viewListener to check
+        // if any of the views are clicked and / or if they are favourite'd
         binding.coursesRecycler.adapter = CoursesListRecyclerView(allDecks, this, context)
     }
 
+    // Listeners for Card Deck Views
     override fun onDeckPressed(department: String, deck: Deck, position: Int, color: ColorPairing) {
         Log.d("Got Deck: ", deck.toString())
         Log.d("Deck Department: ", department)
