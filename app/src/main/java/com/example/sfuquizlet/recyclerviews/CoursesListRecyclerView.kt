@@ -2,7 +2,6 @@ package com.example.sfuquizlet.recyclerviews
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.Deck
 import com.example.sfuquizlet.R
 
-// Stores all the courses into several
-
+// A color list to color code each department
+// Feel free to add more!
 val colorLists = arrayOf(
     Color.parseColor("#C2FDD6"),
     Color.parseColor("#A7D6FF"),
@@ -22,12 +21,13 @@ val colorLists = arrayOf(
 
 // Recycler view to store courses, assorted by their department
 class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Deck>>,
+                              private val viewListener: CardDeckViewListener,
                               val context: Context
                                 ): RecyclerView.Adapter<CoursesListRecyclerView.CoursesListHolder>(){
 
     // View holder for each department, see
     // department_list.xml for the layout
-    class CoursesListHolder(private val inflater: LayoutInflater, val parent: ViewGroup, view: View)
+    class CoursesListHolder(private val viewListener: CardDeckViewListener, val parent: ViewGroup, view: View)
         : RecyclerView.ViewHolder(view) {
 
         // Sets the content of a department_list.xml
@@ -41,7 +41,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
             // Creates a recycler view of the associated decks with the department
             val recyclerView = view.findViewById<RecyclerView>(R.id.departmentRecycler)
             recyclerView.layoutManager = LinearLayoutManager(parent.context)
-            recyclerView.adapter = DepartmentListRecycler(departmentName, decks, parent.context, inflater, color)
+            recyclerView.adapter = DepartmentListRecycler(departmentName, decks, viewListener, parent.context, color)
         }
     }
 
@@ -51,7 +51,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
 
         // To alter the width / height parameters,
         // use layout params!
-        return CoursesListHolder(inflater, parent, view)
+        return CoursesListHolder(viewListener, parent, view)
     }
 
     override fun onBindViewHolder(holder: CoursesListHolder, position: Int) {
@@ -60,8 +60,9 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
         val department = departmentGroups.keys.toTypedArray()[position]
         val departmentCourses = departmentGroups[department]
         if(departmentCourses != null){
+
+            // Assign a color to each department
             val color = colorLists[position % colorLists.size]
-            Log.d("Color set to: At position ", color.toString() + position.toString())
             holder.setContent(department, departmentCourses, color)
         }
     }

@@ -2,11 +2,9 @@ package com.example.sfuquizlet.recyclerviews
 
 import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewParent
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.graphics.ColorUtils
@@ -15,22 +13,35 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.Deck
 import com.example.sfuquizlet.R
 
+// Interface to call events on the card deck views
+interface CardDeckViewListener {
+    fun onDeckPressed(department: String, deck: Deck, position: Int)
+
+    // Modify this if needed for favourites
+    fun onFavouritesPressed(deck: Deck)
+}
+
+
 // Recycler View to store all associated decks of a given department
 class DepartmentListRecycler(private val department: String,
-                            private val departmentCourses: List<Deck>,
+                             private val departmentCourses: List<Deck>,
+                             private val viewListener: CardDeckViewListener,
                              val context: Context,
-                             val layoutInflater: LayoutInflater,
                              val color: Int) : RecyclerView.Adapter<DepartmentListRecycler.DepartmentCourseHolder>(){
 
     class DepartmentCourseHolder(
         private val department: String,
-        inflater: LayoutInflater,
-        parent: ViewParent,
         view: View)
         : RecyclerView.ViewHolder(view) {
 
-            fun setContent(deck: Deck, color: Int) {
+            fun setData(color: Int, deck: Deck, viewListener: CardDeckViewListener, position: Int) {
+
                 val view = this.itemView
+                // Set the view on click listener
+                view.setOnClickListener {
+                    viewListener.onDeckPressed(department, deck, position)
+                }
+
                 // Set the course number
                 val title = view.findViewById<TextView>(R.id.courseTitle)
                 title.text = department + deck.courseNumber
@@ -40,17 +51,19 @@ class DepartmentListRecycler(private val department: String,
                 numCards.text =
                     "${deck.cardIds.size} Cards"
 
-
-
                 // Setting the tint for background
                 // - src: https://www.codegrepper.com/code-examples/java/how+to+change+background+tint+color+programmatically+android
                 var drawable = DrawableCompat.wrap(view.background)
                 DrawableCompat.setTint(drawable, color)
                 view.background = drawable
 
-
                 // The favourite button
                 val favButton = view.findViewById<Button>(R.id.favouriteButton)
+
+                // Set the on favourite button listener
+                favButton.setOnClickListener {
+                    viewListener.onFavouritesPressed(deck)
+                }
 
                 // Darken the color of the text, button
                 val darkerColor = darkenColour(color)
@@ -62,19 +75,20 @@ class DepartmentListRecycler(private val department: String,
                 DrawableCompat.setTint(drawable, darkerColor)
                 favButton.background = drawable
             }
-            // TODO Add listener to open deck and close deck
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DepartmentCourseHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.course_card, parent, false)
-        return DepartmentCourseHolder(department, inflater, parent, view)
+        return DepartmentCourseHolder(department, view)
     }
 
     override fun onBindViewHolder(holder: DepartmentCourseHolder, position: Int) {
-        holder.setContent(
+        holder.setData(
+            color,
             departmentCourses[position],
-            color
+            viewListener,
+            position
         )
     }
 
