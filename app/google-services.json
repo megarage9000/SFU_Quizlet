@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "591413741022",
+    "project_id": "iat359quizlet",
+    "storage_bucket": "iat359quizlet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591413741022:android:5ab965e36fd8078ee8494f",
+        "android_client_info": {
+          "package_name": "com.example.sfuquizlet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591413741022-40va5q9met9e3cjjs9e0d4sebqkntgf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOCzMTDc2z9kO8ZAH6at9i4wm-JtRZI3M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591413741022-40va5q9met9e3cjjs9e0d4sebqkntgf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
