@@ -38,8 +38,10 @@ class StudyDeckFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_study_deck, container, false)
+        val card = inflater.inflate(R.layout.card, container, false)
+
         val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
-        val editCardButton = view.findViewById<ImageView>(R.id.EditCard)
+        val editCardButton = card.findViewById<ImageView>(R.id.edit_button)
 
         addCardButton.setOnClickListener {
             // John: This was auto filled, I kind of don't know what this is

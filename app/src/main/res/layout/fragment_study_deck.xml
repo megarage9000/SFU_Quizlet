@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudyDeck">
+    tools:context=".StudyDeckFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -107,122 +107,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <LinearLayout
-        android:id="@+id/weight"
-        android:layout_width="0dp"
-        android:layout_height="539dp"
-        android:layout_marginTop="24dp"
-        android:orientation="vertical"
-        android:weightSum="1"
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="409dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AddNewCard">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/card_widget_bg"
-            android:orientation="vertical"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="12dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.1"
-                android:orientation="horizontal"
-                android:weightSum="0">
-
-                <TextView
-                    android:id="@+id/courseTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/flair_bg"
-                    android:fontFamily="@font/manrope_medium"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="4dp"
-                    android:text="Chapter 1"
-                    android:textColor="@color/dark_grey" />
-
-                <TextView
-                    android:id="@+id/courseNumCards"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/flair_bg"
-                    android:fontFamily="@font/manrope_medium"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="4dp"
-                    android:text="Fill in the Blanks"
-                    android:textColor="@color/dark_grey" />
-
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/flair_bg"
-                    android:fontFamily="@font/manrope_medium"
-                    android:paddingHorizontal="16dp"
-                    android:paddingVertical="4dp"
-                    android:text="Easy"
-                    android:textColor="@color/dark_grey" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.9"
-                android:fontFamily="@font/manrope_medium"
-                android:paddingVertical="24dp"
-                android:text="Rebecca Sear, Marketing Director of a regional restaurant chain, is directing a study to identify and assess the in-dining experience of the customers at one of the restaurants. She directs her staff to design a web-based market survey for distribution to all of the restaurant's 1265 customers who enjoyed a meal during the past 6 months. For this study, the set of 1265 customers is ________________."
-                android:textColor="@color/dark_grey"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/manrope_medium"
-                    android:text="Added by larrynguyen#098"
-                    android:textColor="@color/medium_grey"
-                    android:textSize="12sp" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <ImageView
-                        android:id="@+id/EditCard"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:scaleType="fitEnd"
-                        app:srcCompat="@drawable/ic_icon_edit" />
-
-                    <ImageView
-                        android:id="@+id/imageView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:scaleType="center"
-                        app:srcCompat="@drawable/ic_icon_trash" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/AddNewCard"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
