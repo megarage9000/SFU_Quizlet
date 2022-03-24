@@ -17,8 +17,8 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
 
         // Placeholder data until we setup sign up feature
-        const val EMAIL = "jjredicck@yahoo.sdo"
-        const val NAME = "Tommy Jones"
+        const val EMAIL = "dashboardman@ayo.code"
+        const val NAME = "Sebastian Vettel"
         const val PASS = "StrongPass1234@"
 
         // access to root node
@@ -38,9 +38,14 @@ class MainActivity : AppCompatActivity() {
 
         layoutInflator = LayoutInflater.from(this)
         frameLayout = findViewById(R.id.frameLayoutID)
-        dashBoardView = layoutInflator.inflate(R.layout.dashboard, null)
+//        dashBoardView = layoutInflator.inflate(R.layout.course_list, null)
+//
+//        frameLayout.addView(dashBoardView)
 
-        frameLayout.addView(dashBoardView)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frameLayoutID, DashBoardFragment())
+            .commit()
 
         initializeNavBarHomeBtn()
         initializeNavBarCoursesBtn()
@@ -52,7 +57,11 @@ class MainActivity : AppCompatActivity() {
         val navBarHomeButton = findViewById<ImageView>(R.id.navBarHomeID)
         navBarHomeButton.setOnClickListener {
             frameLayout.removeAllViews()
-            frameLayout.addView(layoutInflator.inflate(R.layout.dashboard, null))
+//            frameLayout.addView(layoutInflator.inflate(R.layout.dashboard, null))
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frameLayoutID, DashBoardFragment())
+                .commit()
         }
     }
 
