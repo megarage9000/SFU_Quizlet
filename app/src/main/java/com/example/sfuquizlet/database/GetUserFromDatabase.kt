@@ -75,16 +75,19 @@ public fun MainActivity.getUserFavourites(){
 
 }
 
-fun getUserFavourites(){
+fun getUserFavourites(): ArrayList<Any>{
     val user = User("","")
+
+    var userFavouriteDecks = ArrayList<Any>()
 
     val favDeckListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             val fetchedValue = snapshot.value as Map<String, String>
             for (i in snapshot.children){
+                userFavouriteDecks.add(i)
                 Log.d("dashboardtestYO", i.toString().substringAfter("value = "))
-            }
 
+            }
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -93,8 +96,12 @@ fun getUserFavourites(){
 
     }
 
+    //Grab User
     val currUser = MainActivity.auth.currentUser
     MainActivity.database.reference.child("users").child(currUser!!.uid).child("deckIds")
         .addListenerForSingleValueEvent(favDeckListener)
+
+    //Return arraylist of favourite decks
+    return userFavouriteDecks
 }
 

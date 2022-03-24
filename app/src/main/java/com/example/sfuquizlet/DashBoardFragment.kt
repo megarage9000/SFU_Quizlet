@@ -17,11 +17,20 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener{
 
     lateinit var binding: DashboardBinding
     lateinit var userDecks : MutableList<String>
+    lateinit var dialog: LoadingDialog
+
+    //Need to make sure to load items before showing - Thanks John
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        dialog = LoadingDialog(requireContext())
+        dialog.show()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         binding = DashboardBinding.inflate(inflater)
         val view = binding.root
@@ -44,16 +53,14 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener{
     }
 
 
-//    fun testGet(){
-//        var user = getUserFromDatabase()
-//        getAllDecksFromDatabase(this)
-//        userDecks = user.deckIds
-//    }
-
     override fun onDecksArrived(deck: Map<String, List<Deck>>) {
-        MainActivity().getUserFavourites()
-        getUserFavourites()
+        dialog.hide()
+        val context = this.requireContext()
+//        MainActivity().getUserFavourites()
+        var testingArr: ArrayList<Any> = getUserFavourites()
+
+        for(i in testingArr){
+            Log.d("dashboard3", i.toString().substringAfter("value = "))
+        }
     }
-
-
 }
