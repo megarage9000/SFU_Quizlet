@@ -80,9 +80,11 @@ fun getUserFavourites(){
 
     val favDeckListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
-            val fetchedValue = snapshot.value.toString().split(",")
-            val val1 = fetchedValue.get(1)
-            Log.d("dashboard alternative", val1)
+            val fetchedValue = snapshot.value as Map<String, String>
+            for (i in snapshot.children){
+                Log.d("dashboardtestYO", i.toString().substringAfter("value = "))
+            }
+
         }
 
         override fun onCancelled(error: DatabaseError) {
