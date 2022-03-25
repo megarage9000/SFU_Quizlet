@@ -5,30 +5,45 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_margin="10dp"
-    android:background="@drawable/edit_text_bg">
+    android:layout_margin="2.5dp"
+    android:background="@drawable/flair_bg">
 
     <TextView
         android:id="@+id/FlairText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/manrope_medium"
         android:gravity="center"
+        android:maxLines="1"
+        android:paddingHorizontal="5dp"
         android:text="Flair"
+        android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/FlairDelete"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <View
+    <Button
         android:id="@+id/FlairDelete"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="1dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="5dp"
         android:background="@drawable/ic_delete_flair"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/FlairText" />
+        app:layout_constraintStart_toStartOf="@+id/guideline6"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.7" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

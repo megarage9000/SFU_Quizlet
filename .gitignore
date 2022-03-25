@@ -40,6 +40,5 @@ output.json
 *.jks
 *.keystore
 
-
 # Android Profiling
 *.hprof

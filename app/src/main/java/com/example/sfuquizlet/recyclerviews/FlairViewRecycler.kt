@@ -6,14 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.HashMap
 
 interface Remover {
     fun onRemove()
 }
 
 // For the flair page
-class FlairViewReycler(val array: ArrayList<String>, context: Context, layoutInflater: LayoutInflater) :
-    RecyclerView.Adapter<FlairViewReycler.FlairViewHolder>(){
+class FlairViewRecycler(val flairs: MutableList<Flair>, context: Context, layoutInflater: LayoutInflater) :
+    RecyclerView.Adapter<FlairViewRecycler.FlairViewHolder>(){
 
     class FlairViewHolder(val view: View, pos: Int) : RecyclerView.ViewHolder(view){
         var pos : Int
@@ -34,18 +36,23 @@ class FlairViewReycler(val array: ArrayList<String>, context: Context, layoutInf
     override fun onBindViewHolder(holder: FlairViewHolder, position: Int) {
         val view = holder.itemView.findViewById<View>(R.id.FlairDelete)
         val text = holder.itemView.findViewById<TextView>(R.id.FlairText)
-        text.text = array[position]
+        text.text = flairs[position].title
         view.setOnClickListener {
-            array.removeAt(position)
+            flairs.removeAt(position)
             this.notifyDataSetChanged()
         }
 
     }
-    override fun getItemCount() = array.size
+    override fun getItemCount() = flairs.size
 
     fun addItem(flairName: String) {
-        array.add(flairName)
-        notifyItemInserted(array.size - 1);
+        val id = UUID.randomUUID().toString()
+        flairs.add(Flair(id, flairName))
+        notifyItemInserted(flairs.size - 1);
+    }
+
+    fun getFlairItems(): MutableList<Flair> {
+        return flairs;
     }
 
 }
