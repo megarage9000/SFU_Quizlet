@@ -55,38 +55,24 @@ fun getUserFromDatabase(): User {
     return user
 }
 
-//testing if it works
-public fun MainActivity.getUserFavourites(){
 
-    MainActivity.database.reference.child("users")
-        .child("4EI5uO5Z8RUEEHGCJtKrtbTWwoq1").child("deckIds")
-        .addListenerForSingleValueEvent(object: ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val fetchedValue = snapshot.value.toString()
-                Log.d("dashboard", fetchedValue)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
-
-
-}
-
-fun getUserFavourites(): ArrayList<Any>{
+fun getUserFavourites(): ArrayList<String>{
     val user = User("","")
 
-    var userFavouriteDecks = ArrayList<Any>()
+    var userFavouriteDecks = arrayListOf<String>()
 
     val favDeckListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
-            val fetchedValue = snapshot.value as Map<String, String>
-            for (i in snapshot.children){
-                userFavouriteDecks.add(i)
-                Log.d("dashboardtestYO", i.toString().substringAfter("value = "))
+            val fetchedValue = snapshot.value as Map<String, Map<String,String>>
 
+            if(fetchedValue["deckIds"] != null){
+                val deckIds = fetchedValue["deckIds"]
+                if(deckIds != null){
+                    userFavouriteDecks = ArrayList(deckIds.values)
+                    for(i in userFavouriteDecks){
+                        Log.d("dash2", i)
+                    }
+                }
             }
         }
 
@@ -98,7 +84,7 @@ fun getUserFavourites(): ArrayList<Any>{
 
     //Grab User
     val currUser = MainActivity.auth.currentUser
-    MainActivity.database.reference.child("users").child(currUser!!.uid).child("deckIds")
+    MainActivity.database.reference.child("users").child(currUser!!.uid)
         .addListenerForSingleValueEvent(favDeckListener)
 
     //Return arraylist of favourite decks

@@ -35,7 +35,6 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener{
         binding = DashboardBinding.inflate(inflater)
         val view = binding.root
         getAllDecksFromDatabase(this)
-
         return view
     }
 
@@ -57,10 +56,6 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener{
         dialog.hide()
         val context = this.requireContext()
 //        MainActivity().getUserFavourites()
-        var testingArr: ArrayList<Any> = getUserFavourites()
-
-        for(i in testingArr){
-            Log.d("dashboard3", i.toString().substringAfter("value = "))
-        }
+        getUserFavourites()
     }
 }
