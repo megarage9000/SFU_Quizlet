@@ -7,7 +7,13 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-fun getUserFavourites(): ArrayList<String>{
+interface CardsPracticedListener{
+    fun onReceivedCardsPracticed(i: Int)
+    fun onReceivedCardsAdded(i: Int)
+    fun onReceivedUserFavourites(a: ArrayList<String>)
+}
+
+fun getUserFavourites(listener: CardsPracticedListener): ArrayList<String>{
     //Initialize user
     val user = User("","")
 
@@ -24,6 +30,7 @@ fun getUserFavourites(): ArrayList<String>{
                     for(i in userFavouriteDecks){
                         Log.d("dash2", i)
                     }
+                    listener.onReceivedUserFavourites(userFavouriteDecks)
                 }
             }
         }
@@ -41,11 +48,6 @@ fun getUserFavourites(): ArrayList<String>{
 
     //Return arraylist of favourite decks
     return userFavouriteDecks
-}
-
-interface CardsPracticedListener{
-    fun onReceivedCardsPracticed(i: Int)
-    fun onReceivedCardsAdded(i: Int)
 }
 
 //Get number of cards practiced

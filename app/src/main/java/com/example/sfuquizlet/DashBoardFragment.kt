@@ -81,4 +81,9 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Cards
         val totalCardsAdded = view.findViewById<TextView>(R.id.textView5)
         totalCardsAdded.text = i.toString()
     }
+
+    //Updates the favourites course list
+    override fun onReceivedUserFavourites(a: ArrayList<String>) {
+        //update recycler views
+    }
 }
