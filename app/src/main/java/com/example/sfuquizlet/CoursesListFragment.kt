@@ -25,7 +25,6 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         dialog.show()
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,10 +34,6 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         val view = binding.root
         getAllDecksFromDatabase(this)
         return view
-    }
-
-    companion object {
-
     }
 
     // Listener to await all the retrieved decks from the database
