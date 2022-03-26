@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/card_widget_bg"
+    android:orientation="vertical"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="12dp">
+
+    <LinearLayout
+        android:id="@+id/flairs_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:weightSum="0">
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/flair_bg"
+            android:fontFamily="@font/manrope_medium"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="4dp"
+            android:text="Chapter 1"
+            android:textColor="@color/dark_grey" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/flair_bg"
+            android:fontFamily="@font/manrope_medium"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="4dp"
+            android:text="Fill in the Blanks"
+            android:textColor="@color/dark_grey" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/flair_bg"
+            android:fontFamily="@font/manrope_medium"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="4dp"
+            android:text="Easy"
+            android:textColor="@color/dark_grey" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_weight="1"
+        android:fontFamily="@font/manrope_medium"
+        android:gravity="center_vertical"
+        android:paddingBottom="24dp"
+        android:text="Rebecca Sear, Marketing Director of a regional restaurant chain, is directing a study to identify and assess the in-dining experience of the customers at one of the restaurants. What's this question even saying. I'm adding characters to get to 250."
+        android:textColor="@color/dark_grey"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/manrope_medium"
+            android:text="Added by larrynguyen#098"
+            android:textColor="@color/medium_grey"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <ImageButton
+                android:id="@+id/edit_button"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_weight="0"
+                android:background="@android:color/transparent"
+                android:contentDescription="Edit Button"
+                app:srcCompat="@drawable/ic_icon_edit" />
+
+            <ImageButton
+                android:id="@+id/delete_button"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="0"
+                android:background="@android:color/transparent"
+                android:contentDescription="Delete Button"
+                app:srcCompat="@drawable/ic_icon_trash" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

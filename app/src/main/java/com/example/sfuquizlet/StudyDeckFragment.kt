@@ -1,34 +1,41 @@
 package com.example.sfuquizlet
 
-import android.content.Intent
+
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.sfuquizlet.database.getCardsFromDatabase
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+const val ARG_ID = "id"
+const val ARG_DEPARTMENT = "department"
+const val ARG_COURSE_NUMBER = "courseNumber"
+const val ARG_CARD_COUNT = "cardCount"
+const val ARG_CARD_IDS = "cardIds"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StudyDeckFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class StudyDeckFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var id: String? = null
+    private var department: String? = null
+    private var courseNumber: String? = null
+    private var cardCount: Int? = null
+    private var cardIds: ArrayList<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            id = it.getString(ARG_ID)
+            department = it.getString(ARG_DEPARTMENT)
+            courseNumber = it.getString(ARG_COURSE_NUMBER)
+            cardCount = it.getInt(ARG_CARD_COUNT)
+            cardIds = it.getStringArrayList(ARG_CARD_IDS)
         }
     }
 
@@ -38,8 +45,24 @@ class StudyDeckFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_study_deck, container, false)
+        val card = inflater.inflate(R.layout.card, container, false)
+
+        val title = view.findViewById<TextView>(R.id.studyDeckTitle)
+        title.text = "$department $courseNumber"
+
+        val cardAmount = view.findViewById<TextView>(R.id.studyDeckCardCount)
+        cardAmount.text = "$cardCount Cards"
+
         val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
-        val editCardButton = view.findViewById<ImageView>(R.id.EditCard)
+        val editCardButton = card.findViewById<ImageView>(R.id.edit_button)
+
+        val cardsRecyclerView = view.findViewById<RecyclerView>(R.id.cards_recycler_view)
+        val cards = mutableListOf<Card>()
+        val cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(cards)
+        val llm = LinearLayoutManager(inflater.context)
+        cardsRecyclerView.adapter = cardsRecyclerViewAdapter
+        cardsRecyclerView.layoutManager = llm
+        getCardsFromDatabase(cardIds as MutableList<String>, cardsRecyclerViewAdapter)
 
         addCardButton.setOnClickListener {
             // John: This was auto filled, I kind of don't know what this is
@@ -59,22 +82,92 @@ class StudyDeckFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StudyDeckFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(id: String, department: String, courseNumber: String, cardCount: Int, cardIds: ArrayList<String>) =
             StudyDeckFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_ID, id)
+                    putString(ARG_DEPARTMENT, department)
+                    putString(ARG_COURSE_NUMBER, courseNumber)
+                    putInt(ARG_CARD_COUNT, cardCount)
+                    putStringArrayList(ARG_CARD_IDS, cardIds)
                 }
             }
+    }
+}
+
+class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>() {
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private var isDisplayingQuestion = true
+
+        private val questionTextView: TextView = view.findViewById<TextView>(R.id.question)
+        private val authorTextView: TextView = view.findViewById<TextView>(R.id.author)
+        val editButton: ImageButton = view.findViewById<ImageButton>(R.id.edit_button)
+        val deleteButton: ImageButton = view.findViewById<ImageButton>(R.id.delete_button)
+
+        private lateinit var card: Card
+
+        fun setData(card: Card) {
+            // Populate card contents
+            this.card = card
+
+            questionTextView.text = this.card.question
+            authorTextView.text = "Added by ${this.card.authorId}"
+
+            // Toggle between question and answer
+            val view = this.itemView
+            view.setOnClickListener {
+                // TODO: Update cards viewed count
+                onClickFlipCard()
+            }
+        }
+
+        private fun onClickFlipCard() {
+            val view = this.itemView
+            val animation1 = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0f)
+            val animation2 = ObjectAnimator.ofFloat(view, "scaleY", 0f, 1f)
+
+            animation1.interpolator = AccelerateDecelerateInterpolator()
+            animation1.duration = 100
+
+            animation2.interpolator = AccelerateDecelerateInterpolator()
+            animation2.duration = 100
+
+            animation1.addListener(object : AnimatorListenerAdapter() {
+                // Once this animation ends, call the next one
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    // If displaying question, switch to answer
+                    if (isDisplayingQuestion) {
+                        questionTextView.text = card.answer
+
+                    // Else, switch to question
+                    } else {
+                        questionTextView.text = card.question
+                    }
+
+                    // Toggle boolean check
+                    isDisplayingQuestion = !isDisplayingQuestion
+                    animation2.start()
+                }
+            })
+            animation1.start()
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val card = LayoutInflater.from(parent.context).inflate(R.layout.card, parent, false)
+        return ViewHolder(card)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.setData(cards[position])
+    }
+
+    override fun getItemCount(): Int = cards.size
+
+    fun addCard(card: Card) {
+        cards.add(card)
+        notifyDataSetChanged()
     }
 }
