@@ -4,6 +4,7 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
     android:background="@drawable/card_widget_bg"
     android:orientation="vertical"
     android:paddingHorizontal="12dp"
@@ -15,6 +16,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.1"
         android:orientation="horizontal"
+        android:visibility="gone"
         android:weightSum="0">
 
         <TextView
@@ -57,10 +59,10 @@
     <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="0.9"
         android:fontFamily="@font/manrope_medium"
-        android:paddingVertical="24dp"
+        android:paddingBottom="24dp"
         android:text="Rebecca Sear, Marketing Director of a regional restaurant chain, is directing a study to identify and assess the in-dining experience of the customers at one of the restaurants. She directs her staff to design a web-based market survey for distribution to all of the restaurant's 1265 customers who enjoyed a meal during the past 6 months. For this study, the set of 1265 customers is ________________."
         android:textColor="@color/dark_grey"
         android:textSize="16sp" />
@@ -93,8 +95,8 @@
 
             <ImageButton
                 android:id="@+id/edit_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:layout_weight="0"
                 android:background="@android:color/transparent"
                 android:contentDescription="Edit Button"
@@ -102,9 +104,9 @@
 
             <ImageButton
                 android:id="@+id/delete_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginLeft="4dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginLeft="8dp"
                 android:layout_weight="0"
                 android:background="@android:color/transparent"
                 android:contentDescription="Delete Button"

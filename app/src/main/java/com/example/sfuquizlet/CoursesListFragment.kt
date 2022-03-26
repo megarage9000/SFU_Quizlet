@@ -63,7 +63,12 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         frameLayout.removeAllViews()
         parentFragmentManager
             .beginTransaction()
-            .replace(R.id.frameLayoutID, StudyDeckFragment.newInstance(deck.id, deck.department, deck.courseNumber, deck.cardIds.size))
+            .replace(R.id.frameLayoutID, StudyDeckFragment.newInstance(
+                deck.id,
+                deck.department,
+                deck.courseNumber,
+                deck.cardIds.size,
+                deck.cardIds as ArrayList<String>))
             .commit()
     }
 
