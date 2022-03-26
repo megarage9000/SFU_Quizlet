@@ -45,7 +45,6 @@ class StudyDeckFragment : Fragment(), EditCardListener {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_study_deck, container, false)
-        val card = inflater.inflate(R.layout.card, container, false)
 
         val title = view.findViewById<TextView>(R.id.studyDeckTitle)
         title.text = "$department $courseNumber"
@@ -54,7 +53,6 @@ class StudyDeckFragment : Fragment(), EditCardListener {
         cardAmount.text = "$cardCount Cards"
 
         val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
-        val editCardButton = card.findViewById<ImageView>(R.id.edit_button)
 
         val cardsRecyclerView = view.findViewById<RecyclerView>(R.id.cards_recycler_view)
         val cards = mutableListOf<Card>()
@@ -68,13 +66,6 @@ class StudyDeckFragment : Fragment(), EditCardListener {
             EditCardPageActivity.OpenAddCard(activity as Activity, this)
         }
 
-        editCardButton.setOnClickListener {
-            // John: This was auto filled, I kind of don't know what this is
-            // - But it null checks the context
-//            container?.let { it1 -> EditCardPageActivity.OpenEditCard(it1.context,
-//                "00006e51-058b-4a59-b5e7-bbbdc9ab00a4",
-//                "4f47a3bf-3686-4ef0-99ed-cc5550d5b76b") }
-        }
         return view
     }
 

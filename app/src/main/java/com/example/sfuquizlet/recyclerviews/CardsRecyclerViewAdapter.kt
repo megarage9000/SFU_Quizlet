@@ -3,6 +3,7 @@ package com.example.sfuquizlet.recyclerviews
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,25 +12,31 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.Card
+import com.example.sfuquizlet.EditCardListener
+import com.example.sfuquizlet.EditCardPageActivity
 import com.example.sfuquizlet.R
 
-class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>() {
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), EditCardListener {
         private var isDisplayingQuestion = true
 
         private val questionTextView: TextView = view.findViewById<TextView>(R.id.question)
         private val authorTextView: TextView = view.findViewById<TextView>(R.id.author)
-        val editButton: ImageButton = view.findViewById<ImageButton>(R.id.edit_button)
-        val deleteButton: ImageButton = view.findViewById<ImageButton>(R.id.delete_button)
+        private val editButton: ImageButton = view.findViewById<ImageButton>(R.id.edit_button)
+        private val deleteButton: ImageButton = view.findViewById<ImageButton>(R.id.delete_button)
 
         private lateinit var card: Card
 
         fun setData(card: Card) {
             // Populate card contents
             this.card = card
-
             questionTextView.text = this.card.question
             authorTextView.text = "Added by ${this.card.authorId}"
+
+            // Attach edit button listener
+            editButton.setOnClickListener {
+                EditCardPageActivity.OpenEditCard(this.itemView.context, this.card, this)
+            }
 
             // Toggle between question and answer
             val view = this.itemView
@@ -37,6 +44,10 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adap
                 // TODO: Update cards viewed count
                 onClickFlipCard()
             }
+        }
+
+        override fun onEditCardClose(card: Card) {
+            updateCard(card)
         }
 
         private fun onClickFlipCard() {
@@ -86,5 +97,26 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adap
     fun addCard(card: Card) {
         cards.add(0, card)
         notifyDataSetChanged()
+    }
+
+    fun updateCard(card: Card) {
+        val index = findCardIndex(card)
+
+        if (index == -1) {
+            Log.i("SFUQuizlet", "Unable to update card")
+            return
+        }
+
+        cards[index] = card
+        notifyDataSetChanged()
+    }
+
+    private fun findCardIndex(targetCard: Card): Int {
+        for ((index, card) in cards.withIndex()) {
+            if (card.id == targetCard.id) {
+                return index
+            }
+        }
+        return -1
     }
 }
