@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
     private fun initializeNavBarHomeBtn() {
         val navBarHomeButton = findViewById<ImageView>(R.id.navBarHomeID)
         navBarHomeButton.setOnClickListener {
+            addFavouriteDecks("lklrjoihrgherigu")
             frameLayout.removeAllViews()
 //            frameLayout.addView(layoutInflator.inflate(R.layout.dashboard, null))
             supportFragmentManager

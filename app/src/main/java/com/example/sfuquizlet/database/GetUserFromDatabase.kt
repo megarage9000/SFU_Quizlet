@@ -19,6 +19,7 @@ fun getUserFromDatabase(): User {
             Log.i("TAG", snapshot.value.toString())
 
             val readValue = snapshot.value as Map<String, String> // <String, Any>
+            Log.d("redvalue", readValue.toString())
             val id = readValue["id"]
             val username = readValue["username"]
 
@@ -55,39 +56,4 @@ fun getUserFromDatabase(): User {
     return user
 }
 
-
-fun getUserFavourites(): ArrayList<String>{
-    val user = User("","")
-
-    var userFavouriteDecks = arrayListOf<String>()
-
-    val favDeckListener = object : ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            val fetchedValue = snapshot.value as Map<String, Map<String,String>>
-
-            if(fetchedValue["deckIds"] != null){
-                val deckIds = fetchedValue["deckIds"]
-                if(deckIds != null){
-                    userFavouriteDecks = ArrayList(deckIds.values)
-                    for(i in userFavouriteDecks){
-                        Log.d("dash2", i)
-                    }
-                }
-            }
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-
-        }
-
-    }
-
-    //Grab User
-    val currUser = MainActivity.auth.currentUser
-    MainActivity.database.reference.child("users").child(currUser!!.uid)
-        .addListenerForSingleValueEvent(favDeckListener)
-
-    //Return arraylist of favourite decks
-    return userFavouriteDecks
-}
 
