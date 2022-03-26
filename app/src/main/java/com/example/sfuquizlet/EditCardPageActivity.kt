@@ -16,10 +16,18 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.sfuquizlet.databinding.ActivityEditCardPageBinding
+import java.util.*
 
 lateinit var binding : ActivityEditCardPageBinding
 
 interface EditCardListener {
+    // The event that is called once
+    // the Edit Card Page is finished
+    // submitting / editing card.
+    //
+    // - NOTE: The card will have at least
+    // an question, an answer, and an ID.
+    // Will need to check other parameters
     fun onEditCardClose(card: Card)
 }
 
@@ -28,7 +36,6 @@ class EditCardPageActivity : AppCompatActivity() {
     lateinit var QuestionContent: FillInCards
     lateinit var AnswerContent: FillInCards
     lateinit var FlairView: FlairEditor
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +48,11 @@ class EditCardPageActivity : AppCompatActivity() {
 
         binding.Title.text = titleName
         binding.SubmitButton.text = submitButtonName
+
+        // The submit button listener
+        // - Calls the "Calling" Activity / Fragment as an
+        // EditCardListener (if it implements the interface),
+        // where the newly updated/added card is returned
         binding.SubmitButton.setOnClickListener {
             card.answer = AnswerContent.getContent()
             card.question = QuestionContent.getContent()
@@ -63,7 +75,8 @@ class EditCardPageActivity : AppCompatActivity() {
         lateinit var card: Card
         lateinit var listener: EditCardListener
 
-        fun OpenEditCard(context: Context, _card: Card, _deck: Deck, _listener: EditCardListener) {
+        // To open the Edit Card Page as an Edit Card page
+        fun OpenEditCard(context: Context, _card: Card, _listener: EditCardListener) {
             val intent = Intent(context, EditCardPageActivity::class.java)
             card = _card
             listener = _listener
@@ -72,10 +85,17 @@ class EditCardPageActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
 
+        // To open the Edit Card Page as an Add Card Page
+        // - NOTE: The card contents will only contain the following:
+        //      - Question
+        //      - Answer
+        //      - ID
+        // Other parts of the card will need to be
+        // filled once this page has finished
         fun OpenAddCard(context: Context, _listener: EditCardListener) {
             val intent = Intent(context, EditCardPageActivity::class.java)
             card = Card(
-                "", // Do you want to generate a new UUID here?
+                UUID.randomUUID().toString(),
                 "",
                 "",
                 mutableListOf()

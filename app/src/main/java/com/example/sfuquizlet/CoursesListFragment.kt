@@ -13,7 +13,7 @@ import com.example.sfuquizlet.recyclerviews.ColorPairing
 import com.example.sfuquizlet.recyclerviews.CoursesListRecyclerView
 
 
-class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, EditCardListener {
+class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
 
     lateinit var binding: CourseListBinding
     lateinit var dialog: LoadingDialog
@@ -25,7 +25,6 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, Edi
         dialog.show()
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,10 +34,6 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, Edi
         val view = binding.root
         getAllDecksFromDatabase(this)
         return view
-    }
-
-    companion object {
-
     }
 
     // Listener to await all the retrieved decks from the database
@@ -59,15 +54,10 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, Edi
         Log.d("Got Deck: ", deck.toString())
         Log.d("Deck Department: ", department)
         Log.d("Deck Position: ", position.toString())
-        EditCardPageActivity.OpenAddCard(this.requireContext(), this)
     }
 
     override fun onFavouritesPressed(deck: Deck) {
         Log.d("Got Deck for favourite: ", deck.toString())
-    }
-
-    override fun onEditCardClose(card: Card) {
-        Log.d("New card Added!: ", card.toString())
     }
 
 
