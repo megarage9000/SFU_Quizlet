@@ -18,7 +18,7 @@ interface CardDeckViewListener {
     fun onDeckPressed(department: String, deck: Deck, position: Int, color: ColorPairing)
 
     // Modify this if needed for favourites
-    fun onFavouritesPressed(deck: Deck)
+    fun onSavedDeckPressed(deck: Deck)
 }
 
 
@@ -53,29 +53,13 @@ class DepartmentListRecycler(private val department: String,
                 numCards.text =
                     "${deck.cardIds.size} Cards"
 
-                // Setting the tint for background
-                // - src: https://www.codegrepper.com/code-examples/java/how+to+change+background+tint+color+programmatically+android
-                var drawable = DrawableCompat.wrap(view.background)
-                DrawableCompat.setTint(drawable, color.primary)
-                view.background = drawable
-
-                // The favourite button
-                val favButton = view.findViewById<Button>(R.id.favouriteButton)
+                // The save button
+                val saveButton = view.findViewById<Button>(R.id.saveButton)
 
                 // Set the on favourite button listener
-                favButton.setOnClickListener {
-                    viewListener.onFavouritesPressed(deck)
+                saveButton.setOnClickListener {
+                    viewListener.onSavedDeckPressed(deck)
                 }
-
-                // Darken the color of the text, button
-                val darkerColor = color.secondary
-                title.setTextColor(darkerColor)
-                numCards.setTextColor(darkerColor)
-
-                // Setting the tint for the favourite button background
-                drawable = DrawableCompat.wrap(favButton.background)
-                DrawableCompat.setTint(drawable, darkerColor)
-                favButton.background = drawable
             }
         }
 
