@@ -13,7 +13,7 @@ import com.example.sfuquizlet.recyclerviews.ColorPairing
 import com.example.sfuquizlet.recyclerviews.CoursesListRecyclerView
 
 
-class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
+class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, EditCardListener {
 
     lateinit var binding: CourseListBinding
     lateinit var dialog: LoadingDialog
@@ -59,10 +59,15 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         Log.d("Got Deck: ", deck.toString())
         Log.d("Deck Department: ", department)
         Log.d("Deck Position: ", position.toString())
+        EditCardPageActivity.OpenAddCard(this.requireContext(), this)
     }
 
     override fun onFavouritesPressed(deck: Deck) {
         Log.d("Got Deck for favourite: ", deck.toString())
+    }
+
+    override fun onEditCardClose(card: Card) {
+        Log.d("New card Added!: ", card.toString())
     }
 
 

@@ -7,22 +7,21 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.sfuquizlet.database.getCardsFromDatabase
-import com.example.sfuquizlet.database.getFlairsFromDatabase
 import com.example.sfuquizlet.databinding.ActivityEditCardPageBinding
-import java.util.*
 
 lateinit var binding : ActivityEditCardPageBinding
+
+interface EditCardListener {
+    fun onEditCardClose(card: Card)
+}
 
 class EditCardPageActivity : AppCompatActivity() {
 
@@ -37,60 +36,53 @@ class EditCardPageActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val deckId = intent.getStringExtra("deckId")
-        val cardId: String? = intent.getStringExtra("cardId")
-//        val titleName = intent.getStringExtra("titleName")
-//        val submitButtonName = intent.getStringExtra("submitButtonName")
+        val titleName = intent.getStringExtra("titleName")
+        val submitButtonName = intent.getStringExtra("submitButtonName")
 
-        binding.Title.text = "Add Card"
-        binding.SubmitButton.text = "Add Card"
+        binding.Title.text = titleName
+        binding.SubmitButton.text = submitButtonName
         binding.SubmitButton.setOnClickListener {
+            card.answer = AnswerContent.getContent()
+            card.question = QuestionContent.getContent()
+            listener.onEditCardClose(card)
             finish()
-        }
-
-        if(cardId == null){
-            card = Card(
-                "",
-                "",
-                "",
-                mutableListOf()
-            )
         }
 
         val answer: String = card.answer
         val question: String = card.question
-        val flairs: MutableList<Flair> = getFlairsFromDatabase(card.flairIds)
 
         QuestionContent = FillInCards("Question", "Enter Question", question, this, binding.QuestionView)
         AnswerContent = FillInCards("Answer", "Enter Answer", answer, this, binding.AnswerView)
-        FlairView = FlairEditor(this, flairs, binding.FlairView)
+
+        // --- For Flairs, in a future implementation --- //
+        // val flairs: MutableList<Flair> = getFlairsFromDatabase(card.flairIds)
+        // FlairView = FlairEditor(this, flairs, binding.FlairView)
     }
 
     companion object {
         lateinit var card: Card
+        lateinit var listener: EditCardListener
 
-        lateinit var deck: Deck
-
-        fun OpenEditCard(context: Context, _card: Card, _deck: Deck) {
+        fun OpenEditCard(context: Context, _card: Card, _deck: Deck, _listener: EditCardListener) {
             val intent = Intent(context, EditCardPageActivity::class.java)
             card = _card
-            deck = _deck
+            listener = _listener
             intent.putExtra("titleName", "Edit Card")
             intent.putExtra("submitButtonName", "Save Card")
             context.startActivity(intent)
         }
 
-        fun OpenAddCard(context: Context, _deck: Deck) {
+        fun OpenAddCard(context: Context, _listener: EditCardListener) {
             val intent = Intent(context, EditCardPageActivity::class.java)
             card = Card(
-                "",
+                "", // Do you want to generate a new UUID here?
                 "",
                 "",
                 mutableListOf()
             )
-            deck = _deck
-            intent.putExtra("titleName", "Edit Card")
-            intent.putExtra("submitButtonName", "Save Card")
+            listener = _listener
+            intent.putExtra("titleName", "Add Card")
+            intent.putExtra("submitButtonName", "Submit Card")
             context.startActivity(intent)
         }
     }
@@ -153,7 +145,7 @@ class FillInCards(private val title: String, private val textHint: String, var t
     }
 
     fun getContent() : String {
-        return view.findViewById<EditText>(R.id.CardInput).toString()
+        return view.findViewById<EditText>(R.id.CardInput).text.toString()
     }
 }
 
