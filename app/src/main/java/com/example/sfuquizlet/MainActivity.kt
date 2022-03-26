@@ -1,15 +1,21 @@
 package com.example.sfuquizlet
 
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
-import com.example.sfuquizlet.database.getUserFromDatabase
+import android.widget.ImageButton
+import androidx.core.content.ContextCompat
+import androidx.core.widget.ImageViewCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+
+enum class NavBarOptions {
+    HOME, COURSES, PROFILE
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +35,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var  frameLayout: FrameLayout
     lateinit var dashBoardView: View
 
+    private lateinit var navBarHomeButton: ImageButton
+    private lateinit var navBarCoursesButton: ImageButton
+    private lateinit var navBarProfileButton: ImageButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,46 +52,63 @@ class MainActivity : AppCompatActivity() {
 
         frameLayout.addView(dashBoardView)
 
-        initializeNavBarHomeBtn()
-        initializeNavBarCoursesBtn()
-        initializeNavBarProfileBtn()
-
+        initializeNavBarBtns()
     }
 
-    private fun initializeNavBarHomeBtn() {
-        val navBarHomeButton = findViewById<ImageView>(R.id.navBarHomeID)
+    private fun initializeNavBarBtns() {
+        navBarHomeButton = findViewById<ImageButton>(R.id.navBarHomeID)
+        navBarCoursesButton = findViewById<ImageButton>(R.id.navBarCoursesID)
+        navBarProfileButton = findViewById<ImageButton>(R.id.navBarProfileID)
+        setNavBarListeners()
+    }
+
+    private fun setNavBarListeners() {
+        // Home Button
         navBarHomeButton.setOnClickListener {
+            setNavBarActiveBtn(NavBarOptions.HOME)
             frameLayout.removeAllViews()
             frameLayout.addView(layoutInflator.inflate(R.layout.dashboard, null))
         }
-    }
 
-    private fun initializeNavBarCoursesBtn() {
-        val navBarCoursesButton = findViewById<ImageView>(R.id.navBarCoursesID)
+        // Courses Button
         navBarCoursesButton.setOnClickListener {
+            setNavBarActiveBtn(NavBarOptions.COURSES)
             frameLayout.removeAllViews()
             supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.frameLayoutID, CoursesListFragment())
                 .commit()
-//            val courseListView = layoutInflator.inflate(R.layout.course_list, null)
-//            val testView = courseListView.findViewById<View>(R.id.OpenStudyDeck)
-//            testView.setOnClickListener {
-//                frameLayout.removeAllViews()
-//                supportFragmentManager
-//                    .beginTransaction()
-//                    .replace(R.id.frameLayoutID, StudyDeckFragment())
-//                    .commit()
-//            }
-//            frameLayout.addView(courseListView)
         }
-    }
 
-    private fun initializeNavBarProfileBtn() {
-        val navBarProfileButton = findViewById<ImageView>(R.id.navBarProfileID)
+        // Profile Button
         navBarProfileButton.setOnClickListener {
+            setNavBarActiveBtn(NavBarOptions.PROFILE)
             frameLayout.removeAllViews()
             frameLayout.addView(layoutInflator.inflate(R.layout.fragment_edit_profile, null))
         }
+    }
+
+    private fun setNavBarActiveBtn(active: NavBarOptions) {
+        // Reset all nav bar button styles
+        resetNavBarBtnStyles(navBarHomeButton)
+        resetNavBarBtnStyles(navBarCoursesButton)
+        resetNavBarBtnStyles(navBarProfileButton)
+
+        // Set active styles for the selected button
+        when(active) {
+            NavBarOptions.HOME -> setNavBarActiveBtnStyles(navBarHomeButton)
+            NavBarOptions.COURSES -> setNavBarActiveBtnStyles(navBarCoursesButton)
+            NavBarOptions.PROFILE -> setNavBarActiveBtnStyles(navBarProfileButton)
+        }
+    }
+
+    private fun resetNavBarBtnStyles(button: ImageButton) {
+        button.setBackgroundResource(0)
+        ImageViewCompat.setImageTintList(button, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.dark_grey)));
+    }
+
+    private fun setNavBarActiveBtnStyles(button: ImageButton) {
+        button.setBackgroundResource(R.drawable.button_bg)
+        ImageViewCompat.setImageTintList(button, ColorStateList.valueOf(ContextCompat.getColor(this, R.color.white)));
     }
 }
