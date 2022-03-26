@@ -2,8 +2,8 @@ package com.example.sfuquizlet.database
 
 import android.util.Log
 import com.example.sfuquizlet.Card
-import com.example.sfuquizlet.CardsRecyclerViewAdapter
 import com.example.sfuquizlet.MainActivity
+import com.example.sfuquizlet.recyclerviews.CardsRecyclerViewAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

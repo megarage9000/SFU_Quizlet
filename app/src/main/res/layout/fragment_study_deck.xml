@@ -14,7 +14,7 @@
         android:fontFamily="@font/manrope_bold"
         android:text="Study Deck"
         android:textColor="@color/dark_grey"
-        android:textSize="22sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
