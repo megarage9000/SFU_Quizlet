@@ -36,14 +36,15 @@
 
     </LinearLayout>
 
-    <Button
+    <ToggleButton
         android:id="@+id/favouriteButton"
         android:layout_width="42dp"
         android:layout_height="42dp"
+        android:layout_weight="0"
         android:layout_margin="12dp"
+        android:textOff="@null"
+        android:textOn="@null"
+        android:textSize="0dp"
         android:backgroundTint="#42C581"
-        android:enabled="false"
-        android:background="@drawable/favorite_button"
-        android:paddingHorizontal="12dp" />
-
+        android:background="@drawable/favorite_button" />
 </LinearLayout>
