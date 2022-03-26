@@ -1,11 +1,13 @@
 package com.example.sfuquizlet
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.databinding.CourseListBinding
 import com.example.sfuquizlet.recyclerviews.CardDeckViewListener
@@ -56,12 +58,16 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
 
     // Listeners for Card Deck Views
     override fun onDeckPressed(department: String, deck: Deck, position: Int, color: ColorPairing) {
-        Log.d("Got Deck: ", deck.toString())
-        Log.d("Deck Department: ", department)
-        Log.d("Deck Position: ", position.toString())
+        val mainActivity = context as Activity
+        val frameLayout = mainActivity.findViewById<FrameLayout>(R.id.frameLayoutID)
+        frameLayout.removeAllViews()
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.frameLayoutID, StudyDeckFragment.newInstance(deck.id, deck.department, deck.courseNumber, deck.cardIds.size))
+            .commit()
     }
 
-    override fun onFavouritesPressed(deck: Deck) {
+    override fun onSavedDeckPressed(deck: Deck) {
         Log.d("Got Deck for favourite: ", deck.toString())
     }
 

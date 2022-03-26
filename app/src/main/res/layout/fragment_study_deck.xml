@@ -7,7 +7,7 @@
     tools:context=".StudyDeckFragment">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/studyDeckTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -20,6 +20,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/studyDeckCardCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/manrope_medium"
+        android:text="45 Cards"
+        android:textColor="@color/dark_grey"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/studyDeckTitle" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
@@ -29,11 +43,12 @@
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:padding="16dp"
+        android:visibility="gone"
         android:weightSum="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/studyDeckTitle">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -75,7 +90,7 @@
         android:id="@+id/favouriteButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="52dp"
         android:layout_weight="0.75"
         android:background="@android:color/transparent"
         android:drawableRight="@drawable/ic_icon_chevron_down"
@@ -90,7 +105,7 @@
         android:id="@+id/AddNewCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="52dp"
         android:layout_weight="1"
         android:background="@drawable/button_bg"
         android:backgroundTint="@color/blue"
