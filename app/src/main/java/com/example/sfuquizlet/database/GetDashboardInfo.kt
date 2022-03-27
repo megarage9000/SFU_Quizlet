@@ -41,40 +41,43 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
                     }
                 }
             }
-        }
 
-        override fun onCancelled(error: DatabaseError) {
+            //Compare user decks to decks database
+            val getFavouriteDecksListener = object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val fetchedValue = snapshot.value as Map<String, Map<String, String>>
 
-        }
+                    //Grab the decks that are favourited
+                    for (string in userFavouriteDecks){
+                        for(deck in fetchedValue.values){
+                            if(string == deck["id"]){
 
-    }
-    //Compare user decks to decks database
-    val getFavouriteDecksListener = object : ValueEventListener{
-        override fun onDataChange(snapshot: DataSnapshot) {
-            val fetchedValue = snapshot.value as Map<String, Map<String, String>>
+                                val id = deck["id"]
+                                val department = deck["department"]
+                                val courseNumber = deck["courseNumber"]
+                                val semester = deck["semester"]
+                                val year = deck["year"]
+                                val instructor = deck["instructor"]
 
-            //Grab the decks that are favourited
-            for (string in userFavouriteDecks){
-                for(deck in fetchedValue.values){
-                    if(string == deck["id"]){
+                                val newDeck = Deck(id!!, department!!, courseNumber!!, semester!!, year!!, instructor!!)
 
-                        val id = deck["id"]
-                        val department = deck["department"]
-                        val courseNumber = deck["courseNumber"]
-                        val semester = deck["semester"]
-                        val year = deck["year"]
-                        val instructor = deck["instructor"]
+                                favouritesList.add(newDeck)
 
-                        val newDeck = Deck(id!!, department!!, courseNumber!!, semester!!, year!!, instructor!!)
-
-                        favouritesList.add(newDeck)
-
-                        returnDeckList.put(department,favouritesList)
+                                returnDeckList.put(department,favouritesList)
+                            }
+                        }
                     }
+                    //Notify listener
+                    listener.onReceivedUserFavourites(returnDeckList)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
                 }
             }
-            //Notify listener
-            listener.onReceivedUserFavourites(returnDeckList)
+            //Access database to compare cards
+            MainActivity.database.reference.child("decks")
+                .addListenerForSingleValueEvent(getFavouriteDecksListener)
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -87,10 +90,6 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
     val currUser = MainActivity.auth.currentUser
     MainActivity.database.reference.child("users").child(currUser!!.uid)
         .addListenerForSingleValueEvent(favDeckListener)
-
-    //Grab the favourite decks from decks database
-    MainActivity.database.reference.child("decks")
-        .addListenerForSingleValueEvent(getFavouriteDecksListener)
 
     //Return arraylist of favourite decks
     return returnDeckList
