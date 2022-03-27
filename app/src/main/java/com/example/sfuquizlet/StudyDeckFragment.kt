@@ -107,6 +107,7 @@ class StudyDeckFragment : Fragment(), EditCardListener {
             cardsRecyclerViewAdapter.addCard(card)
         }
         // The edit card page returned an edited card.
+        // - For some reason edit an existing card already works??????
         else{
             // - May need to deal with updating cards as well
             // - i.e. Search through the card recycler view and update
