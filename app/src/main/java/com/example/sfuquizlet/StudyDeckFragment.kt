@@ -1,34 +1,47 @@
 package com.example.sfuquizlet
 
-import android.content.Intent
+
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
+import android.widget.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.sfuquizlet.database.getCardsFromDatabase
+import com.example.sfuquizlet.database.getUserFromDatabase
+import com.example.sfuquizlet.recyclerviews.CardsRecyclerViewAdapter
+import java.time.Instant
+import java.time.LocalTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+const val ARG_ID = "id"
+const val ARG_DEPARTMENT = "department"
+const val ARG_COURSE_NUMBER = "courseNumber"
+const val ARG_CARD_COUNT = "cardCount"
+const val ARG_CARD_IDS = "cardIds"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StudyDeckFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class StudyDeckFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+class StudyDeckFragment : Fragment(), EditCardListener {
+    private var id: String? = null
+    private var department: String? = null
+    private var courseNumber: String? = null
+    private var cardCount: Int? = null
+    private var cardIds: ArrayList<String>? = null
+
+    private lateinit var cardsRecyclerViewAdapter: CardsRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            id = it.getString(ARG_ID)
+            department = it.getString(ARG_DEPARTMENT)
+            courseNumber = it.getString(ARG_COURSE_NUMBER)
+            cardCount = it.getInt(ARG_CARD_COUNT)
+            cardIds = it.getStringArrayList(ARG_CARD_IDS)
         }
     }
 
@@ -38,43 +51,76 @@ class StudyDeckFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_study_deck, container, false)
+
+        val title = view.findViewById<TextView>(R.id.studyDeckTitle)
+        title.text = "$department $courseNumber"
+
+        val cardAmount = view.findViewById<TextView>(R.id.studyDeckCardCount)
+        cardAmount.text = "$cardCount Cards"
+
         val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
-        val editCardButton = view.findViewById<ImageView>(R.id.EditCard)
+
+        val cardsRecyclerView = view.findViewById<RecyclerView>(R.id.cards_recycler_view)
+        val cards = mutableListOf<Card>()
+        cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(cards, this)
+        val llm = LinearLayoutManager(inflater.context)
+        cardsRecyclerView.adapter = cardsRecyclerViewAdapter
+        cardsRecyclerView.layoutManager = llm
+        getCardsFromDatabase(cardIds as MutableList<String>, cardsRecyclerViewAdapter)
 
         addCardButton.setOnClickListener {
-            // John: This was auto filled, I kind of don't know what this is
-            // - But it null checks the context
-//            container?.let { it1 -> EditCardPageActivity.OpenAddCard(it1.context,
-//                "4f47a3bf-3686-4ef0-99ed-cc5550d5b76b") }
+            EditCardPageActivity.OpenAddCard(activity as Activity, this)
         }
 
-        editCardButton.setOnClickListener {
-            // John: This was auto filled, I kind of don't know what this is
-            // - But it null checks the context
-//            container?.let { it1 -> EditCardPageActivity.OpenEditCard(it1.context,
-//                "00006e51-058b-4a59-b5e7-bbbdc9ab00a4",
-//                "4f47a3bf-3686-4ef0-99ed-cc5550d5b76b") }
-        }
         return view
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StudyDeckFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(id: String, department: String, courseNumber: String, cardCount: Int, cardIds: ArrayList<String>) =
             StudyDeckFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putString(ARG_ID, id)
+                    putString(ARG_DEPARTMENT, department)
+                    putString(ARG_COURSE_NUMBER, courseNumber)
+                    putInt(ARG_CARD_COUNT, cardCount)
+                    putStringArrayList(ARG_CARD_IDS, cardIds)
                 }
             }
+    }
+
+    override fun onEditCardClose(card: Card) {
+        // Check if the card has an id and timestamp.
+        // If it doesn't, it's a new card that has
+        // been added.
+        if(card.authorId.isEmpty() && card.timestamp.isEmpty()){
+            card.authorId = getCurrentUser().id // Get the user ID
+
+            // Setting timestamp
+            // From: https://stackoverflow.com/questions/49862357/how-do-i-get-the-current-time-as-a-timestamp-in-kotlin
+            card.timestamp = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneOffset.UTC)
+                .format(Instant.now())
+
+            // Adds a new card
+            cardsRecyclerViewAdapter.addCard(card)
+
+            // Add to deck's list of card ids
+            cardIds?.add(card.id)
+        }
+        // The edit card page returned an edited card.
+        // - For some reason edit an existing card already works??????
+        else{
+            // - May need to deal with updating cards as well
+            // - i.e. Search through the card recycler view and update
+            // the card with new information?
+        }
+
+        // Insert the card to database
+        id?.let { cardIds?.let { it1 -> insertCard(card, it, it1) } }
+
+        // Notify the recycler view has a new card added / a card has been updated
+        cardsRecyclerViewAdapter.notifyDataSetChanged()
     }
 }

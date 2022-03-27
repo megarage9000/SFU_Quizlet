@@ -7,7 +7,7 @@
     android:layout_marginHorizontal="16dp"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout2"
         android:layout_width="409dp"
         android:layout_height="56dp"
@@ -18,27 +18,50 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageView
+        <ImageButton
             android:id="@+id/navBarHomeID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginStart="48dp"
+            android:layout_weight="0"
+            android:background="@drawable/button_bg"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="12dp"
+            app:tint="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_icon_home" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/navBarCoursesID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="12dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/navBarProfileID"
+            app:layout_constraintStart_toEndOf="@+id/navBarHomeID"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_icon_courses" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/navBarProfileID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginEnd="48dp"
+            android:layout_weight="0"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="12dp"
+            android:background="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_icon_profile" />
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
         android:id="@+id/frameLayoutID"

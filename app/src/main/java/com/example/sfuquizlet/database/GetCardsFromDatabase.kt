@@ -3,20 +3,18 @@ package com.example.sfuquizlet.database
 import android.util.Log
 import com.example.sfuquizlet.Card
 import com.example.sfuquizlet.MainActivity
+import com.example.sfuquizlet.recyclerviews.CardsRecyclerViewAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-fun getCardsFromDatabase(listOfCardIds: MutableList<String>) : List<Card> {
+fun getCardsFromDatabase(listOfCardIds: MutableList<String>, cardsRecyclerViewAdapter: CardsRecyclerViewAdapter) {
     // Step 1
     if(listOfCardIds.isEmpty()) {
-        return mutableListOf()
+        return
     }
 
     // Step 2
-    val returnList = mutableListOf<Card>()
-
-    // Step 4
     val myCardListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             Log.i("TAG", snapshot.value.toString())
@@ -39,7 +37,7 @@ fun getCardsFromDatabase(listOfCardIds: MutableList<String>) : List<Card> {
                 val flairIds = readValue["flairIds"] as MutableList<String>
                 card.flairIds = flairIds
             }
-            returnList.add(card)
+            cardsRecyclerViewAdapter.addCard(card)
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -53,7 +51,4 @@ fun getCardsFromDatabase(listOfCardIds: MutableList<String>) : List<Card> {
         MainActivity.database.reference.child("cards").child(cardId)
             .addListenerForSingleValueEvent(myCardListener)
     }
-
-    // Step 5
-    return returnList
 }
