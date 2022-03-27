@@ -7,11 +7,14 @@ import com.example.sfuquizlet.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import java.time.LocalDate
+
 
 interface DashboardInfoListener{
     fun onReceivedCardsPracticed(i: Int)
     fun onReceivedCardsAdded(i: Int)
     fun onReceivedUserFavourites(a: Map<String,List<Deck>>)
+    fun onReceivedNewCardsToday(i: Int)
 }
 
 //Grab the user's favourite decks
@@ -148,6 +151,47 @@ fun getCardsAdded(listener: DashboardInfoListener): Int{
     //Grab User
     val currUser = MainActivity.auth.currentUser
     MainActivity.database.reference.child("users").child(currUser!!.uid)
+        .addListenerForSingleValueEvent(cardsAddedListener)
+
+    return totalNum
+}
+
+//Get new cards today
+fun getNewCardsToday(listener: DashboardInfoListener): Int{
+    //Initialize user
+    val user = User("", "")
+    var totalNum: Int = 0
+
+    val cardsAddedListener = object : ValueEventListener{
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val fetchedValue = snapshot.value as Map<String, Map<String,String>>
+            var numCards: Int = 0
+            for(cards in fetchedValue.values){
+                val time = cards["timestamp"]
+                if(time != null) {
+                    //Remove the timestamp, we only care about YYYY/MM/DD
+                    val removeHours = time.substringBefore(" ").split("-")
+                    val formattedTime = removeHours.map { it.toInt() }
+                    val convertedTime = LocalDate.of(formattedTime.get(0),formattedTime.get(1), formattedTime.get(2))
+
+                    //If card was added today, update new cards today
+                    if(convertedTime.isBefore(LocalDate.now())) numCards++
+                }
+
+            }
+            //Let listener know
+            listener.onReceivedNewCardsToday(numCards)
+            Log.d("dashboardTime", numCards.toString())
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+
+    //Grab User
+    val currUser = MainActivity.auth.currentUser
+    MainActivity.database.reference.child("cards")
         .addListenerForSingleValueEvent(cardsAddedListener)
 
     return totalNum

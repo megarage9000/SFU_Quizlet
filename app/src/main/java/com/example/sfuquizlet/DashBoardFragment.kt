@@ -42,6 +42,7 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
         getUserCardsPracticed(this)
         getCardsAdded(this)
         getUserFavourites(this)
+        getNewCardsToday(this)
 
         //Update new cards num
         val newCardsNum = view.findViewById<TextView>(R.id.newCardNum)
@@ -92,5 +93,11 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
         binding.favouritesRecycler.layoutManager = LinearLayoutManager(context)
         binding.favouritesRecycler.adapter = CoursesListRecyclerView(inputDecks,this, context)
 
+    }
+
+    override fun onReceivedNewCardsToday(i: Int) {
+        val view = binding.root
+        val newCardsToday = view.findViewById<TextView>(R.id.newCardNum)
+        newCardsToday.text = i.toString() + " Cards"
     }
 }
