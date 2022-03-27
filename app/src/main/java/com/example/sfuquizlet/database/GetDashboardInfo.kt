@@ -11,17 +11,19 @@ import com.google.firebase.database.ValueEventListener
 interface DashboardInfoListener{
     fun onReceivedCardsPracticed(i: Int)
     fun onReceivedCardsAdded(i: Int)
-    fun onReceivedUserFavourites(a: ArrayList<Deck>)
+    fun onReceivedUserFavourites(a: Map<String,List<Deck>>)
 }
 
 //Grab the user's favourite decks
-fun getUserFavourites(listener: DashboardInfoListener): ArrayList<Deck>{
+fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
     //Initialize user
     val user = User("","")
 
     var userFavouriteDecks = arrayListOf<String>()
 
-    var returnDeckList = arrayListOf<Deck>()
+    var favouritesList = mutableListOf<Deck>()
+
+    var returnDeckList = mutableMapOf<String,List<Deck>>()
 
     val favDeckListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
@@ -62,17 +64,13 @@ fun getUserFavourites(listener: DashboardInfoListener): ArrayList<Deck>{
 
                         val newDeck = Deck(id!!, department!!, courseNumber!!, semester!!, year!!, instructor!!)
 
-                        returnDeckList.add(newDeck)
+                        favouritesList.add(newDeck)
+
+                        returnDeckList.put(department,favouritesList)
                     }
                 }
             }
             //Notify listener
-            for(i in returnDeckList){
-                Log.d("dash 3", returnDeckList.toString())
-            }
-            if(returnDeckList == null){
-                Log.d("dash 3", "is null")
-            }
             listener.onReceivedUserFavourites(returnDeckList)
         }
 

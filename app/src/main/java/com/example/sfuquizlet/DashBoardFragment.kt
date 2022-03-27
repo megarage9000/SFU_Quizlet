@@ -13,6 +13,8 @@ import com.example.sfuquizlet.database.*
 import com.example.sfuquizlet.databinding.DashboardBinding
 import com.example.sfuquizlet.recyclerviews.CardDeckViewListener
 import com.example.sfuquizlet.recyclerviews.ColorPairing
+import com.example.sfuquizlet.recyclerviews.CoursesListRecyclerView
+import com.example.sfuquizlet.recyclerviews.FavouriteCoursesRecycler
 
 
 class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, DashboardInfoListener{
@@ -62,8 +64,6 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
 
 
     override fun onDecksArrived(deck: Map<String, List<Deck>>) {
-        dialog.hide()
-        val context = this.requireContext()
 
     }
 
@@ -85,12 +85,12 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
     }
 
     //Updates the favourites course list
-    override fun onReceivedUserFavourites(a: ArrayList<Deck>) {
+    override fun onReceivedUserFavourites(inputDecks: Map<String,List<Deck>>) {
         dialog.hide()
         //Setting up the recycler with the favourite course
         val context = this.requireContext()
         binding.favouritesRecycler.layoutManager = LinearLayoutManager(context)
-        binding.favouritesRecycler.adapter
+        binding.favouritesRecycler.adapter = CoursesListRecyclerView(inputDecks,this, context)
 
     }
 }
