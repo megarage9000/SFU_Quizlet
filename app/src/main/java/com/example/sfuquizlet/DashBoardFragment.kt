@@ -74,7 +74,6 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
         val totalCardsPracticed = view.findViewById<TextView>(R.id.totalPracNum)
         totalCardsPracticed.text = i.toString()
 
-        Log.d("dashzzz", i.toString())
     }
 
     //Updates total cards added

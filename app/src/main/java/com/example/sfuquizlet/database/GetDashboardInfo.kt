@@ -14,6 +14,7 @@ interface DashboardInfoListener{
     fun onReceivedUserFavourites(a: ArrayList<Deck>)
 }
 
+//Grab the user's favourite decks
 fun getUserFavourites(listener: DashboardInfoListener): ArrayList<Deck>{
     //Initialize user
     val user = User("","")
@@ -66,6 +67,12 @@ fun getUserFavourites(listener: DashboardInfoListener): ArrayList<Deck>{
                 }
             }
             //Notify listener
+            for(i in returnDeckList){
+                Log.d("dash 3", returnDeckList.toString())
+            }
+            if(returnDeckList == null){
+                Log.d("dash 3", "is null")
+            }
             listener.onReceivedUserFavourites(returnDeckList)
         }
 
@@ -103,7 +110,6 @@ fun getUserCardsPracticed(listener: DashboardInfoListener): Int{
                 totalNum = cardsViewed.size
                 listener.onReceivedCardsPracticed(totalNum)
             }
-            Log.d("dash", "total num "+totalNum)
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -134,7 +140,6 @@ fun getCardsAdded(listener: DashboardInfoListener): Int{
                 totalNum = cardsViewed.size
                 listener.onReceivedCardsAdded(totalNum)
             }
-            Log.d("dash", "card ids total num "+totalNum)
         }
 
         override fun onCancelled(error: DatabaseError) {
