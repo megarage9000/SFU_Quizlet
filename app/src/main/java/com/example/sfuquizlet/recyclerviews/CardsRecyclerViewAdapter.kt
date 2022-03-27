@@ -16,7 +16,7 @@ import com.example.sfuquizlet.EditCardListener
 import com.example.sfuquizlet.EditCardPageActivity
 import com.example.sfuquizlet.R
 
-class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
+class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditCardListener) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), EditCardListener {
         private var isDisplayingQuestion = true
 
@@ -35,7 +35,7 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adap
 
             // Attach edit button listener
             editButton.setOnClickListener {
-                EditCardPageActivity.OpenEditCard(this.itemView.context, this.card, this)
+                EditCardPageActivity.OpenEditCard(this.itemView.context, this.card, listener)
             }
 
             // Toggle between question and answer
@@ -47,6 +47,7 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adap
         }
 
         override fun onEditCardClose(card: Card) {
+            Log.i("Steven Pearce Update", card.toString())
             updateCard(card)
         }
 
@@ -108,6 +109,8 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adap
         }
 
         cards[index] = card
+
+
         notifyDataSetChanged()
     }
 

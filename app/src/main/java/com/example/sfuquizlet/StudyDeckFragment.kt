@@ -3,6 +3,7 @@ package com.example.sfuquizlet
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -61,7 +62,7 @@ class StudyDeckFragment : Fragment(), EditCardListener {
 
         val cardsRecyclerView = view.findViewById<RecyclerView>(R.id.cards_recycler_view)
         val cards = mutableListOf<Card>()
-        cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(cards)
+        cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(cards, this)
         val llm = LinearLayoutManager(inflater.context)
         cardsRecyclerView.adapter = cardsRecyclerViewAdapter
         cardsRecyclerView.layoutManager = llm
@@ -89,7 +90,6 @@ class StudyDeckFragment : Fragment(), EditCardListener {
     }
 
     override fun onEditCardClose(card: Card) {
-
         // Check if the card has an id and timestamp.
         // If it doesn't, it's a new card that has
         // been added.
@@ -105,6 +105,9 @@ class StudyDeckFragment : Fragment(), EditCardListener {
 
             // Adds a new card
             cardsRecyclerViewAdapter.addCard(card)
+
+            // Add to deck's list of card ids
+            cardIds?.add(card.id)
         }
         // The edit card page returned an edited card.
         // - For some reason edit an existing card already works??????
@@ -112,11 +115,10 @@ class StudyDeckFragment : Fragment(), EditCardListener {
             // - May need to deal with updating cards as well
             // - i.e. Search through the card recycler view and update
             // the card with new information?
-
         }
 
         // Insert the card to database
-        insertCard(card)
+        id?.let { cardIds?.let { it1 -> insertCard(card, it, it1) } }
 
         // Notify the recycler view has a new card added / a card has been updated
         cardsRecyclerViewAdapter.notifyDataSetChanged()
