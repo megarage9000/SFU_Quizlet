@@ -1,19 +1,23 @@
 package com.example.sfuquizlet
 
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.animation.ObjectAnimator
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.database.getCardsFromDatabase
+import com.example.sfuquizlet.database.getUserFromDatabase
+import com.example.sfuquizlet.recyclerviews.CardsRecyclerViewAdapter
+import java.time.Instant
+import java.time.LocalTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 const val ARG_ID = "id"
 const val ARG_DEPARTMENT = "department"
@@ -21,12 +25,14 @@ const val ARG_COURSE_NUMBER = "courseNumber"
 const val ARG_CARD_COUNT = "cardCount"
 const val ARG_CARD_IDS = "cardIds"
 
-class StudyDeckFragment : Fragment() {
+class StudyDeckFragment : Fragment(), EditCardListener {
     private var id: String? = null
     private var department: String? = null
     private var courseNumber: String? = null
     private var cardCount: Int? = null
     private var cardIds: ArrayList<String>? = null
+
+    private lateinit var cardsRecyclerViewAdapter: CardsRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +51,6 @@ class StudyDeckFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_study_deck, container, false)
-        val card = inflater.inflate(R.layout.card, container, false)
 
         val title = view.findViewById<TextView>(R.id.studyDeckTitle)
         title.text = "$department $courseNumber"
@@ -54,30 +59,19 @@ class StudyDeckFragment : Fragment() {
         cardAmount.text = "$cardCount Cards"
 
         val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
-        val editCardButton = card.findViewById<ImageView>(R.id.edit_button)
 
         val cardsRecyclerView = view.findViewById<RecyclerView>(R.id.cards_recycler_view)
         val cards = mutableListOf<Card>()
-        val cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(cards)
+        cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(cards, this)
         val llm = LinearLayoutManager(inflater.context)
         cardsRecyclerView.adapter = cardsRecyclerViewAdapter
         cardsRecyclerView.layoutManager = llm
         getCardsFromDatabase(cardIds as MutableList<String>, cardsRecyclerViewAdapter)
 
         addCardButton.setOnClickListener {
-            // John: This was auto filled, I kind of don't know what this is
-            // - But it null checks the context
-//            container?.let { it1 -> EditCardPageActivity.OpenAddCard(it1.context,
-//                "4f47a3bf-3686-4ef0-99ed-cc5550d5b76b") }
+            EditCardPageActivity.OpenAddCard(activity as Activity, this)
         }
 
-        editCardButton.setOnClickListener {
-            // John: This was auto filled, I kind of don't know what this is
-            // - But it null checks the context
-//            container?.let { it1 -> EditCardPageActivity.OpenEditCard(it1.context,
-//                "00006e51-058b-4a59-b5e7-bbbdc9ab00a4",
-//                "4f47a3bf-3686-4ef0-99ed-cc5550d5b76b") }
-        }
         return view
     }
 
@@ -94,80 +88,39 @@ class StudyDeckFragment : Fragment() {
                 }
             }
     }
-}
 
-class CardsRecyclerViewAdapter(var cards: MutableList<Card>) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>() {
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private var isDisplayingQuestion = true
+    override fun onEditCardClose(card: Card) {
+        // Check if the card has an id and timestamp.
+        // If it doesn't, it's a new card that has
+        // been added.
+        if(card.authorId.isEmpty() && card.timestamp.isEmpty()){
+            card.authorId = getCurrentUser().id // Get the user ID
 
-        private val questionTextView: TextView = view.findViewById<TextView>(R.id.question)
-        private val authorTextView: TextView = view.findViewById<TextView>(R.id.author)
-        val editButton: ImageButton = view.findViewById<ImageButton>(R.id.edit_button)
-        val deleteButton: ImageButton = view.findViewById<ImageButton>(R.id.delete_button)
+            // Setting timestamp
+            // From: https://stackoverflow.com/questions/49862357/how-do-i-get-the-current-time-as-a-timestamp-in-kotlin
+            card.timestamp = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneOffset.UTC)
+                .format(Instant.now())
 
-        private lateinit var card: Card
+            // Adds a new card
+            cardsRecyclerViewAdapter.addCard(card)
 
-        fun setData(card: Card) {
-            // Populate card contents
-            this.card = card
-
-            questionTextView.text = this.card.question
-            authorTextView.text = "Added by ${this.card.authorId}"
-
-            // Toggle between question and answer
-            val view = this.itemView
-            view.setOnClickListener {
-                // TODO: Update cards viewed count
-                onClickFlipCard()
-            }
+            // Add to deck's list of card ids
+            cardIds?.add(card.id)
+        }
+        // The edit card page returned an edited card.
+        // - For some reason edit an existing card already works??????
+        else{
+            // - May need to deal with updating cards as well
+            // - i.e. Search through the card recycler view and update
+            // the card with new information?
         }
 
-        private fun onClickFlipCard() {
-            val view = this.itemView
-            val animation1 = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0f)
-            val animation2 = ObjectAnimator.ofFloat(view, "scaleY", 0f, 1f)
+        // Insert the card to database
+        id?.let { cardIds?.let { it1 -> insertCard(card, it, it1) } }
 
-            animation1.interpolator = AccelerateDecelerateInterpolator()
-            animation1.duration = 100
-
-            animation2.interpolator = AccelerateDecelerateInterpolator()
-            animation2.duration = 100
-
-            animation1.addListener(object : AnimatorListenerAdapter() {
-                // Once this animation ends, call the next one
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    // If displaying question, switch to answer
-                    if (isDisplayingQuestion) {
-                        questionTextView.text = card.answer
-
-                    // Else, switch to question
-                    } else {
-                        questionTextView.text = card.question
-                    }
-
-                    // Toggle boolean check
-                    isDisplayingQuestion = !isDisplayingQuestion
-                    animation2.start()
-                }
-            })
-            animation1.start()
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val card = LayoutInflater.from(parent.context).inflate(R.layout.card, parent, false)
-        return ViewHolder(card)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.setData(cards[position])
-    }
-
-    override fun getItemCount(): Int = cards.size
-
-    fun addCard(card: Card) {
-        cards.add(card)
-        notifyDataSetChanged()
+        // Notify the recycler view has a new card added / a card has been updated
+        cardsRecyclerViewAdapter.notifyDataSetChanged()
     }
 }

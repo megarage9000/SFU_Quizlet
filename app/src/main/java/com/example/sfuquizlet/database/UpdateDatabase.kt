@@ -8,15 +8,23 @@ import com.example.sfuquizlet.database.getUserFromDatabase
 functions that have an extra child after the id to set the value of just the
 updated field similar to the user update functions at the bottom this file*/
 
-
 fun insertDeck(deck : Deck) {
     MainActivity.database.getReference("decks").child(deck.id)
         .setValue(deck, getCompletionListener())
 }
 
-fun insertCard(card: Card) {
+fun insertCard(card: Card, deckId: String, cardIds: MutableList<String>) {
+    cardIds.add(card.id)
+    // Prevent duplicates
+    val cardSet = cardIds.distinct().toList()
+    // Add the card to the cards
     MainActivity.database.getReference("cards").child(card.id)
         .setValue(card, getCompletionListener())
+    // Update the associated deck
+    MainActivity.database.getReference("decks")
+        .child(deckId)
+        .child("cardIds")
+        .setValue(cardSet, getCompletionListener())
 }
 
 fun insertFlair(flair: Flair) {
