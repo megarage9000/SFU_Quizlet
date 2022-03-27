@@ -11,7 +11,12 @@ import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.database.getCardsFromDatabase
+import com.example.sfuquizlet.database.getUserFromDatabase
 import com.example.sfuquizlet.recyclerviews.CardsRecyclerViewAdapter
+import java.time.Instant
+import java.time.LocalTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 const val ARG_ID = "id"
 const val ARG_DEPARTMENT = "department"
@@ -84,6 +89,35 @@ class StudyDeckFragment : Fragment(), EditCardListener {
     }
 
     override fun onEditCardClose(card: Card) {
-        cardsRecyclerViewAdapter.addCard(card)
+
+        // Check if the card has an id and timestamp.
+        // If it doesn't, it's a new card that has
+        // been added.
+        if(card.authorId.isEmpty() && card.timestamp.isEmpty()){
+            card.authorId = getCurrentUser().id // Get the user ID
+
+            // Setting timestamp
+            // From: https://stackoverflow.com/questions/49862357/how-do-i-get-the-current-time-as-a-timestamp-in-kotlin
+            card.timestamp = DateTimeFormatter
+                .ofPattern("yyyy-MM-dd HH:mm:ss")
+                .withZone(ZoneOffset.UTC)
+                .format(Instant.now())
+
+            // Adds a new card
+            cardsRecyclerViewAdapter.addCard(card)
+        }
+        // The edit card page returned an edited card.
+        else{
+            // - May need to deal with updating cards as well
+            // - i.e. Search through the card recycler view and update
+            // the card with new information?
+
+        }
+
+        // Insert the card to database
+        insertCard(card)
+
+        // Notify the recycler view has a new card added / a card has been updated
+        cardsRecyclerViewAdapter.notifyDataSetChanged()
     }
 }

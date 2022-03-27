@@ -56,6 +56,9 @@ class EditCardPageActivity : AppCompatActivity() {
         binding.SubmitButton.setOnClickListener {
             card.answer = AnswerContent.getContent()
             card.question = QuestionContent.getContent()
+
+
+
             listener.onEditCardClose(card)
             finish()
         }
