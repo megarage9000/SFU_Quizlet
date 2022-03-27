@@ -1,36 +1,38 @@
 package com.example.sfuquizlet.database
 
 import android.util.Log
+import com.example.sfuquizlet.Deck
 import com.example.sfuquizlet.MainActivity
 import com.example.sfuquizlet.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-interface CardsPracticedListener{
+interface DashboardInfoListener{
     fun onReceivedCardsPracticed(i: Int)
     fun onReceivedCardsAdded(i: Int)
-    fun onReceivedUserFavourites(a: ArrayList<String>)
+    fun onReceivedUserFavourites(a: ArrayList<Deck>)
 }
 
-fun getUserFavourites(listener: CardsPracticedListener): ArrayList<String>{
+fun getUserFavourites(listener: DashboardInfoListener): ArrayList<Deck>{
     //Initialize user
     val user = User("","")
 
     var userFavouriteDecks = arrayListOf<String>()
+
+    var returnDeckList = arrayListOf<Deck>()
 
     val favDeckListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             val fetchedValue = snapshot.value as Map<String, Map<String,String>>
 
             if(fetchedValue["deckIds"] != null){
-                val deckIds = fetchedValue["deckIds"]
+                val deckIds = fetchedValue["deckIds"] as ArrayList<String>
                 if(deckIds != null){
-                    userFavouriteDecks = ArrayList(deckIds.values)
+                    userFavouriteDecks = deckIds
                     for(i in userFavouriteDecks){
                         Log.d("dash2", i)
                     }
-                    listener.onReceivedUserFavourites(userFavouriteDecks)
                 }
             }
         }
@@ -40,18 +42,54 @@ fun getUserFavourites(listener: CardsPracticedListener): ArrayList<String>{
         }
 
     }
+    //Compare user decks to decks database
+    val getFavouriteDecksListener = object : ValueEventListener{
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val fetchedValue = snapshot.value as Map<String, Map<String, String>>
 
-    //Grab User
+            //Grab the decks that are favourited
+            for (string in userFavouriteDecks){
+                for(deck in fetchedValue.values){
+                    if(string == deck["id"]){
+
+                        val id = deck["id"]
+                        val department = deck["department"]
+                        val courseNumber = deck["courseNumber"]
+                        val semester = deck["semester"]
+                        val year = deck["year"]
+                        val instructor = deck["instructor"]
+
+                        val newDeck = Deck(id!!, department!!, courseNumber!!, semester!!, year!!, instructor!!)
+
+                        returnDeckList.add(newDeck)
+                    }
+                }
+            }
+            //Notify listener
+            listener.onReceivedUserFavourites(returnDeckList)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+
+    }
+
+    //Grab User favourites
     val currUser = MainActivity.auth.currentUser
     MainActivity.database.reference.child("users").child(currUser!!.uid)
         .addListenerForSingleValueEvent(favDeckListener)
 
+    //Grab the favourite decks from decks database
+    MainActivity.database.reference.child("decks")
+        .addListenerForSingleValueEvent(getFavouriteDecksListener)
+
     //Return arraylist of favourite decks
-    return userFavouriteDecks
+    return returnDeckList
 }
 
 //Get number of cards practiced
-fun getUserCardsPracticed(listener: CardsPracticedListener): Int{
+fun getUserCardsPracticed(listener: DashboardInfoListener): Int{
     //Initialize user
     val user = User("", "")
     var totalNum: Int = 0
@@ -82,12 +120,12 @@ fun getUserCardsPracticed(listener: CardsPracticedListener): Int{
 }
 
 //Same as getting practiced but for cards added
-fun getCardsAdded(listener: CardsPracticedListener): Int{
+fun getCardsAdded(listener: DashboardInfoListener): Int{
     //Initialize user
     val user = User("", "")
     var totalNum: Int = 0
 
-    val cardsPracticedListener = object : ValueEventListener{
+    val cardsAddedListener = object : ValueEventListener{
         override fun onDataChange(snapshot: DataSnapshot) {
             val fetchedValue = snapshot.value as Map<String, Map<String,String>>
 
@@ -107,7 +145,8 @@ fun getCardsAdded(listener: CardsPracticedListener): Int{
     //Grab User
     val currUser = MainActivity.auth.currentUser
     MainActivity.database.reference.child("users").child(currUser!!.uid)
-        .addListenerForSingleValueEvent(cardsPracticedListener)
+        .addListenerForSingleValueEvent(cardsAddedListener)
 
     return totalNum
 }
+

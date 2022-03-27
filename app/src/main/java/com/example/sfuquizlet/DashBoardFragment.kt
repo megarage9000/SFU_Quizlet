@@ -8,13 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.database.*
 import com.example.sfuquizlet.databinding.DashboardBinding
 import com.example.sfuquizlet.recyclerviews.CardDeckViewListener
 import com.example.sfuquizlet.recyclerviews.ColorPairing
 
 
-class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, CardsPracticedListener{
+class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, DashboardInfoListener{
 
     lateinit var binding: DashboardBinding
     lateinit var userDecks : MutableList<String>
@@ -38,6 +39,7 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Cards
         getAllDecksFromDatabase(this)
         getUserCardsPracticed(this)
         getCardsAdded(this)
+        getUserFavourites(this)
 
         //Update new cards num
         val newCardsNum = view.findViewById<TextView>(R.id.newCardNum)
@@ -77,13 +79,19 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Cards
 
     //Updates total cards added
     override fun onReceivedCardsAdded(i: Int) {
+        dialog.hide()
         val view = binding.root
         val totalCardsAdded = view.findViewById<TextView>(R.id.textView5)
         totalCardsAdded.text = i.toString()
     }
 
     //Updates the favourites course list
-    override fun onReceivedUserFavourites(a: ArrayList<String>) {
-        //update recycler views
+    override fun onReceivedUserFavourites(a: ArrayList<Deck>) {
+        dialog.hide()
+        //Setting up the recycler with the favourite course
+        val context = this.requireContext()
+        binding.favouritesRecycler.layoutManager = LinearLayoutManager(context)
+        binding.favouritesRecycler.adapter
+
     }
 }
