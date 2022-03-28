@@ -3,6 +3,7 @@ package com.example.sfuquizlet
 import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
@@ -23,8 +24,8 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
 
         // Placeholder data until we setup sign up feature
-        const val EMAIL = "jjredicck@yahoo.sdo"
-        const val NAME = "Tommy Jones"
+        const val EMAIL = "dashboardman@ayo.code"
+        const val NAME = "Sebastian Vettel"
         const val PASS = "StrongPass1234@"
 
         // access to root node
@@ -48,9 +49,14 @@ class MainActivity : AppCompatActivity() {
 
         layoutInflator = LayoutInflater.from(this)
         frameLayout = findViewById(R.id.frameLayoutID)
-        dashBoardView = layoutInflator.inflate(R.layout.dashboard, null)
+//        dashBoardView = layoutInflator.inflate(R.layout.course_list, null)
+//
+//        frameLayout.addView(dashBoardView)
 
-        frameLayout.addView(dashBoardView)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frameLayoutID, DashBoardFragment())
+            .commit()
 
         initializeNavBarBtns()
     }
@@ -67,7 +73,10 @@ class MainActivity : AppCompatActivity() {
         navBarHomeButton.setOnClickListener {
             setNavBarActiveBtn(NavBarOptions.HOME)
             frameLayout.removeAllViews()
-            frameLayout.addView(layoutInflator.inflate(R.layout.dashboard, null))
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.frameLayoutID, DashBoardFragment())
+                .commit()
         }
 
         // Courses Button

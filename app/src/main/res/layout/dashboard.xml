@@ -17,8 +17,7 @@
         android:textColor="#000000"
         android:textSize="24sp" />
 
-    <include
-        layout="@layout/notification_card" />
+    <include layout="@layout/notification_card" />
 
     <include
         layout="@layout/stats_bars" />
@@ -33,11 +32,9 @@
         android:textColor="#000000"
         android:textSize="16sp" />
 
-    <include
-        layout="@layout/course_card" />
-    <include
-        layout="@layout/cc2" />
-    <include
-        layout="@layout/cc3" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/favouritesRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

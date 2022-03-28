@@ -40,12 +40,14 @@
 
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/saveButton"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+    <ToggleButton
+        android:id="@+id/favouriteButton"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
         android:layout_weight="0"
-        android:background="@drawable/bookmark_checkbox"
-        android:button="@null" />
-
+        android:layout_margin="12dp"
+        android:textOff="@null"
+        android:textOn="@null"
+        android:textSize="0dp"
+        android:background="@drawable/favorite_button" />
 </LinearLayout>

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.databinding.CourseListBinding
@@ -68,8 +69,12 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
     }
 
     override fun onSavedDeckPressed(deck: Deck) {
-        Log.d("Got Deck for favourite: ", deck.toString())
+        val view = binding.root
+        val favButton = view.findViewById<Button>(R.id.favouriteButton)
+        favButton.setOnClickListener {
+            favButton.setOnClickListener {
+                favButton.setSelected(true)
+            }
+        }
     }
-
-
 }

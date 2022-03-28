@@ -1,8 +1,10 @@
 package com.example.sfuquizlet.database
 
+import android.os.Message
 import android.util.Log
 import com.example.sfuquizlet.MainActivity
 import com.example.sfuquizlet.User
+import com.example.sfuquizlet.toastMessage
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -17,6 +19,7 @@ fun getUserFromDatabase(): User {
             Log.i("TAG", snapshot.value.toString())
 
             val readValue = snapshot.value as Map<String, String> // <String, Any>
+            Log.d("redvalue", readValue.toString())
             val id = readValue["id"]
             val username = readValue["username"]
 
@@ -52,3 +55,5 @@ fun getUserFromDatabase(): User {
     // Step 4
     return user
 }
+
+
