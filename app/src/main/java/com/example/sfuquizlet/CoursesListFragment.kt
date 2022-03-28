@@ -67,8 +67,8 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
                 deck.cardIds as ArrayList<String>))
             .commit()
     }
-    
-    override fun onFavouritesPressed(deck: Deck) {
+
+    override fun onSavedDeckPressed(deck: Deck) {
         val view = binding.root
         val favButton = view.findViewById<Button>(R.id.favouriteButton)
         favButton.setOnClickListener {
@@ -76,4 +76,5 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
                 favButton.setSelected(true)
             }
         }
+    }
 }

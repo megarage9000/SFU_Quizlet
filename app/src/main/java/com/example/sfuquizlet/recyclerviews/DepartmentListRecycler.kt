@@ -53,7 +53,7 @@ class DepartmentListRecycler(private val department: String,
                     "${deck.cardIds.size} Cards"
 
                 // The save button
-                val saveButton = view.findViewById<Button>(R.id.saveButton)
+                val saveButton = view.findViewById<Button>(R.id.favouriteButton)
 
                 // Set the on favourite button listener
                 saveButton.setOnClickListener {

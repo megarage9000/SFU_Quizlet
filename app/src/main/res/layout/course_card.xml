@@ -49,6 +49,5 @@
         android:textOff="@null"
         android:textOn="@null"
         android:textSize="0dp"
-        android:backgroundTint="#42C581"
         android:background="@drawable/favorite_button" />
 </LinearLayout>

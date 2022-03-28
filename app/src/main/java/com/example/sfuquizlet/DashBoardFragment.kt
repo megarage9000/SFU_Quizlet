@@ -14,7 +14,7 @@ import com.example.sfuquizlet.databinding.DashboardBinding
 import com.example.sfuquizlet.recyclerviews.CardDeckViewListener
 import com.example.sfuquizlet.recyclerviews.ColorPairing
 import com.example.sfuquizlet.recyclerviews.CoursesListRecyclerView
-import com.example.sfuquizlet.recyclerviews.FavouriteCoursesRecycler
+//import com.example.sfuquizlet.recyclerviews.FavouriteCoursesRecycler
 
 
 class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, DashboardInfoListener{
@@ -59,7 +59,7 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
         Log.d("Tapped", department)
     }
 
-    override fun onFavouritesPressed(deck: Deck) {
+    override fun onSavedDeckPressed(deck: Deck) {
 
     }
 
