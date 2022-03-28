@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
 
         // Placeholder data until we setup sign up feature
-        const val EMAIL = "dashboardman@ayo.code"
+        const val EMAIL = "dashboardman7@ayo.code"
         const val NAME = "Sebastian Vettel"
         const val PASS = "StrongPass1234@"
 
