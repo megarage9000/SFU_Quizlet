@@ -184,7 +184,10 @@ fun getNewCardsToday(listener: DashboardInfoListener): Int{
                     val convertedTime = LocalDate.of(formattedTime.get(0),formattedTime.get(1), formattedTime.get(2))
 
                     //If card was added today, update new cards today
-                    if(convertedTime.isBefore(LocalDate.now())) numCards++
+                    if(convertedTime.isEqual(LocalDate.now())) numCards++
+                    Log.d("numberBool", convertedTime.isEqual(LocalDate.now()).toString())
+                    Log.d("numberConverted", convertedTime.toString())
+                    Log.d("numberTimenow", LocalDate.now().toString())
                 }
 
             }
