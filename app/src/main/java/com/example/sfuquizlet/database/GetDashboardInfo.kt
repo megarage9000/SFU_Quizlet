@@ -24,7 +24,7 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
 
     var userFavouriteDecks = arrayListOf<String>()
 
-    var favouritesList = mutableListOf<Deck>()
+    var favouritesList = arrayListOf<Deck>()
 
     var returnDeckList = mutableMapOf<String,List<Deck>>()
 
@@ -78,7 +78,8 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
                         }
                     }
                     //Notify listener
-                    listener.onReceivedUserFavourites(returnDeckList)
+                    val favouritesList = favouritesList.groupBy { it.department }
+                    listener.onReceivedUserFavourites(favouritesList)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
