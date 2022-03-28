@@ -209,3 +209,44 @@ fun getNewCardsToday(listener: DashboardInfoListener): Int{
     return totalNum
 }
 
+interface UserFavouritesListener{
+    fun onReceivedFavouritesString(incomingArr: ArrayList<String>)
+}
+
+fun getUserFavouritesString(listener: UserFavouritesListener): ArrayList<String>{
+    //Initialize user
+    val user = User("","")
+
+    var userFavouriteDecks = arrayListOf<String>()
+
+
+    val favDeckListener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val fetchedValue = snapshot.value as Map<String, Map<String,String>>
+
+            if(fetchedValue["deckIds"] != null){
+                val deckIds = fetchedValue["deckIds"] as ArrayList<String>
+                if(deckIds != null){
+                    userFavouriteDecks = deckIds
+                    for(i in userFavouriteDecks){
+                        Log.d("dash2", i)
+                    }
+                }
+            }
+            listener.onReceivedFavouritesString(userFavouriteDecks)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+
+    }
+
+    //Grab User favourites
+    val currUser = MainActivity.auth.currentUser
+    MainActivity.database.reference.child("users").child(currUser!!.uid)
+        .addListenerForSingleValueEvent(favDeckListener)
+
+    //Return arraylist of favourite decks
+    return userFavouriteDecks
+}

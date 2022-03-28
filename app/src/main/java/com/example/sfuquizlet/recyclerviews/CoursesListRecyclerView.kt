@@ -34,6 +34,7 @@ val colorLists = arrayOf(
 
 // Recycler view to store courses, assorted by their department
 class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Deck>>,
+                              private val favouriteCourses: ArrayList<String>,
                               private val viewListener: CardDeckViewListener,
                               val context: Context
                                 ): RecyclerView.Adapter<CoursesListRecyclerView.CoursesListHolder>(){
@@ -46,6 +47,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
         // Sets the content of a department_list.xml
         fun setContent(departmentName: String,
                        decks: List<Deck>,
+                       favDecks: ArrayList<String>,
                        color: ColorPairing) {
             val view = this.itemView
             // Sets the title of the department_list.xml
@@ -54,7 +56,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
             // Creates a recycler view of the associated decks with the department
             val recyclerView = view.findViewById<RecyclerView>(R.id.departmentRecycler)
             recyclerView.layoutManager = LinearLayoutManager(parent.context)
-            recyclerView.adapter = DepartmentListRecycler(departmentName, decks, viewListener, parent.context, color)
+            recyclerView.adapter = DepartmentListRecycler(departmentName, decks, favDecks, viewListener, parent.context, color)
         }
     }
 
@@ -77,7 +79,7 @@ class CoursesListRecyclerView(private val departmentGroups: Map<String, List<Dec
             // Assign a color to each department
             // May be reused
             val color = colorLists[position % colorLists.size]
-            holder.setContent(department, departmentCourses, color)
+            holder.setContent(department, departmentCourses, favouriteCourses, color)
         }
     }
 
