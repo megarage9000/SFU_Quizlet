@@ -2,15 +2,18 @@ package com.example.sfuquizlet.recyclerviews
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.Deck
 import com.example.sfuquizlet.R
+import com.example.sfuquizlet.addFavouriteDecks
 
 // Interface to call events on the card deck views
 interface CardDeckViewListener {
@@ -24,6 +27,7 @@ interface CardDeckViewListener {
 // Recycler View to store all associated decks of a given department
 class DepartmentListRecycler(private val department: String,
                              private val departmentCourses: List<Deck>,
+                             private val favouriteCourses: ArrayList<String>,
                              private val viewListener: CardDeckViewListener,
                              val context: Context,
                              val color: ColorPairing) : RecyclerView.Adapter<DepartmentListRecycler.DepartmentCourseHolder>(){
@@ -34,7 +38,7 @@ class DepartmentListRecycler(private val department: String,
         view: View)
         : RecyclerView.ViewHolder(view) {
 
-            fun setData(color: ColorPairing, deck: Deck, viewListener: CardDeckViewListener, position: Int) {
+            fun setData(color: ColorPairing, deck: Deck, favDeck: ArrayList<String>, viewListener: CardDeckViewListener, position: Int) {
 
                 val view = this.itemView
                 // Set the view on click listener
@@ -53,7 +57,10 @@ class DepartmentListRecycler(private val department: String,
                     "${deck.cardIds.size} Cards"
 
                 // The save button
-                val saveButton = view.findViewById<Button>(R.id.favouriteButton)
+                val saveButton = view.findViewById<ToggleButton>(R.id.favouriteButton)
+                for(decks in favDeck){
+                    if(decks == deck.id) saveButton.isChecked = true
+                }
 
                 // Set the on favourite button listener
                 saveButton.setOnClickListener {
@@ -72,6 +79,7 @@ class DepartmentListRecycler(private val department: String,
         holder.setData(
             color,
             departmentCourses[position],
+            favouriteCourses,
             viewListener,
             position
         )
@@ -80,6 +88,7 @@ class DepartmentListRecycler(private val department: String,
     override fun getItemCount(): Int {
         return departmentCourses.size
     }
+
 }
 
 // Darkens a given color:

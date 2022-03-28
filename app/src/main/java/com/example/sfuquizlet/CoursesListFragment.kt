@@ -10,18 +10,20 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.sfuquizlet.database.UserFavouritesListener
+import com.example.sfuquizlet.database.getUserFavouritesString
 import com.example.sfuquizlet.databinding.CourseListBinding
 import com.example.sfuquizlet.recyclerviews.CardDeckViewListener
 import com.example.sfuquizlet.recyclerviews.ColorPairing
 import com.example.sfuquizlet.recyclerviews.CoursesListRecyclerView
 
 
-class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
+class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, UserFavouritesListener {
 
     lateinit var binding: CourseListBinding
     lateinit var dialog: LoadingDialog
     lateinit var selectedDeck: Deck
-
+    lateinit var favArr: ArrayList<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dialog = LoadingDialog(requireContext())
@@ -35,6 +37,7 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         // Inflate the layout for this fragment
         binding = CourseListBinding.inflate(inflater)
         val view = binding.root
+        getUserFavouritesString(this)
         getAllDecksFromDatabase(this)
         return view
     }
@@ -49,7 +52,7 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
         // Creating the recycler view for course list
         // - Note that we are passing this as a viewListener to check
         // if any of the views are clicked and / or if they are favourite'd
-        binding.coursesRecycler.adapter = CoursesListRecyclerView(allDecks, this, context)
+        binding.coursesRecycler.adapter = CoursesListRecyclerView(allDecks, favArr, this, context)
     }
 
     // Listeners for Card Deck Views
@@ -76,5 +79,9 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener {
                 favButton.setSelected(true)
             }
         }
+    }
+
+    override fun onReceivedFavouritesString(incomingArr: ArrayList<String>) {
+        favArr = incomingArr
     }
 }

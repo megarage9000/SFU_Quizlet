@@ -24,7 +24,7 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
 
     var userFavouriteDecks = arrayListOf<String>()
 
-    var favouritesList = mutableListOf<Deck>()
+    var favouritesList = arrayListOf<Deck>()
 
     var returnDeckList = mutableMapOf<String,List<Deck>>()
 
@@ -61,6 +61,16 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
 
                                 val newDeck = Deck(id!!, department!!, courseNumber!!, semester!!, year!!, instructor!!)
 
+                                // Need these null checks for fields that are lists because of the casting from String to Lists
+                                if(deck["cardIds"] != null) {
+                                    val cardIds = deck["cardIds"] as MutableList<String>
+                                    newDeck.cardIds = cardIds
+                                }
+                                if(deck["flairIds"] != null) {
+                                    val flairIds = deck["flairIds"] as MutableList<String>
+                                    newDeck.flairIds = flairIds
+                                }
+
                                 favouritesList.add(newDeck)
 
                                 returnDeckList.put(department,favouritesList)
@@ -68,7 +78,8 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
                         }
                     }
                     //Notify listener
-                    listener.onReceivedUserFavourites(returnDeckList)
+                    val favouritesList = favouritesList.groupBy { it.department }
+                    listener.onReceivedUserFavourites(favouritesList)
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -174,7 +185,10 @@ fun getNewCardsToday(listener: DashboardInfoListener): Int{
                     val convertedTime = LocalDate.of(formattedTime.get(0),formattedTime.get(1), formattedTime.get(2))
 
                     //If card was added today, update new cards today
-                    if(convertedTime.isBefore(LocalDate.now())) numCards++
+                    if(convertedTime.isEqual(LocalDate.now())) numCards++
+                    Log.d("numberBool", convertedTime.isEqual(LocalDate.now()).toString())
+                    Log.d("numberConverted", convertedTime.toString())
+                    Log.d("numberTimenow", LocalDate.now().toString())
                 }
 
             }
@@ -196,3 +210,44 @@ fun getNewCardsToday(listener: DashboardInfoListener): Int{
     return totalNum
 }
 
+interface UserFavouritesListener{
+    fun onReceivedFavouritesString(incomingArr: ArrayList<String>)
+}
+
+fun getUserFavouritesString(listener: UserFavouritesListener): ArrayList<String>{
+    //Initialize user
+    val user = User("","")
+
+    var userFavouriteDecks = arrayListOf<String>()
+
+
+    val favDeckListener = object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val fetchedValue = snapshot.value as Map<String, Map<String,String>>
+
+            if(fetchedValue["deckIds"] != null){
+                val deckIds = fetchedValue["deckIds"] as ArrayList<String>
+                if(deckIds != null){
+                    userFavouriteDecks = deckIds
+                    for(i in userFavouriteDecks){
+                        Log.d("dash2", i)
+                    }
+                }
+            }
+            listener.onReceivedFavouritesString(userFavouriteDecks)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+
+    }
+
+    //Grab User favourites
+    val currUser = MainActivity.auth.currentUser
+    MainActivity.database.reference.child("users").child(currUser!!.uid)
+        .addListenerForSingleValueEvent(favDeckListener)
+
+    //Return arraylist of favourite decks
+    return userFavouriteDecks
+}
