@@ -1,5 +1,6 @@
 package com.example.sfuquizlet
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.Layout
 import android.util.Log
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.database.*
@@ -54,9 +56,20 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
 
     }
 
+    //Onclick for course card
     override fun onDeckPressed(department: String, deck: Deck, position: Int, color: ColorPairing) {
-        //Will add movement to actual deck later
-        Log.d("Tapped", department)
+        val mainActivity = context as Activity
+        val frameLayout = mainActivity.findViewById<FrameLayout>(R.id.frameLayoutID)
+        frameLayout.removeAllViews()
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.frameLayoutID, StudyDeckFragment.newInstance(
+                deck.id,
+                deck.department,
+                deck.courseNumber,
+                deck.cardIds.size,
+                deck.cardIds as ArrayList<String>))
+            .commit()
     }
 
     override fun onSavedDeckPressed(deck: Deck) {

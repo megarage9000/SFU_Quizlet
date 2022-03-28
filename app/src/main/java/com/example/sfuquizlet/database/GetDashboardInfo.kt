@@ -61,6 +61,16 @@ fun getUserFavourites(listener: DashboardInfoListener): Map<String,List<Deck>>{
 
                                 val newDeck = Deck(id!!, department!!, courseNumber!!, semester!!, year!!, instructor!!)
 
+                                // Need these null checks for fields that are lists because of the casting from String to Lists
+                                if(deck["cardIds"] != null) {
+                                    val cardIds = deck["cardIds"] as MutableList<String>
+                                    newDeck.cardIds = cardIds
+                                }
+                                if(deck["flairIds"] != null) {
+                                    val flairIds = deck["flairIds"] as MutableList<String>
+                                    newDeck.flairIds = flairIds
+                                }
+
                                 favouritesList.add(newDeck)
 
                                 returnDeckList.put(department,favouritesList)
