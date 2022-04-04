@@ -26,6 +26,9 @@ fun insertCard(card: Card, deckId: String, cardIds: MutableList<String>) {
         .child(deckId)
         .child("cardIds")
         .setValue(cardSet, getCompletionListener())
+
+    addCardAdded(card.id)
+    Log.d("asdf", "added" + card.id)
 }
 
 fun insertFlair(flair: Flair) {
@@ -82,9 +85,25 @@ fun addCardViewed(cardId: String){
                 .setValue(userViewedCardIds)
         }
     }
+}
 
+fun addCardAdded(cardId: String){
+    val user = MainActivity.auth.currentUser
+    var userCardAddedIds = arrayListOf<String>()
 
+    MainActivity.database.getReference("users").child(user!!.uid).child("cardIds").get().addOnSuccessListener {
+        if(it.exists()){
+            userCardAddedIds = it.value as ArrayList<String>
 
+            if(!userCardAddedIds.contains(cardId)) {
+                userCardAddedIds.add(cardId)
+            }
+            Log.d("asdf", "added" + userCardAddedIds)
+
+            MainActivity.database.getReference("users").child(user!!.uid).child("cardIds")
+                .setValue(userCardAddedIds)
+        }
+    }
 }
 
 
