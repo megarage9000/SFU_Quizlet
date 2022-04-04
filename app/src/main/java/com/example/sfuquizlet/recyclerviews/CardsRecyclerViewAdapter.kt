@@ -15,6 +15,7 @@ import com.example.sfuquizlet.Card
 import com.example.sfuquizlet.EditCardListener
 import com.example.sfuquizlet.EditCardPageActivity
 import com.example.sfuquizlet.R
+import com.example.sfuquizlet.database.getUsernameFromId
 
 class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditCardListener) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), EditCardListener {
@@ -31,7 +32,7 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditC
             // Populate card contents
             this.card = card
             questionTextView.text = this.card.question
-            authorTextView.text = "Added by ${this.card.authorId}"
+            getUsernameFromId(this.card.authorId, authorTextView)
 
             // Attach edit button listener
             editButton.setOnClickListener {
