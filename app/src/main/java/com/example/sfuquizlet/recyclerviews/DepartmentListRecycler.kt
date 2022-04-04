@@ -20,7 +20,8 @@ interface CardDeckViewListener {
     fun onDeckPressed(department: String, deck: Deck, position: Int, color: ColorPairing)
 
     // Modify this if needed for favourites
-    fun onSavedDeckPressed(deck: Deck)
+//    fun onSavedDeckPressed(deck: Deck)
+    fun onSavedDeckPressed(arr: ArrayList<String>)
 }
 
 
@@ -64,7 +65,10 @@ class DepartmentListRecycler(private val department: String,
 
                 // Set the on favourite button listener
                 saveButton.setOnClickListener {
-                    viewListener.onSavedDeckPressed(deck)
+                    var favDeckHolder: ArrayList<String> = favDeck
+                    favDeckHolder.add(deck.id)
+                    viewListener.onSavedDeckPressed(favDeckHolder)
+                    Log.d("favbutton2", "clciked")
                 }
             }
         }

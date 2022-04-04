@@ -50,12 +50,11 @@ fun updateUserCreatedCards(cardId: String) {
         .setValue(user.cardIds, getCompletionListener())
 }
 
-fun addFavouriteDecks(deckId: String) {
-    val user = getUserFromDatabase()
-    user.deckIds.add(deckId)
+fun addFavouriteDecks(arr: ArrayList<String>) {
+    val user = MainActivity.auth.currentUser
 
-    MainActivity.database.getReference("users").child(user.id).child("deckIds")
-        .setValue(user.cardIds, getCompletionListener())
+    MainActivity.database.getReference("users").child(user!!.uid).child("deckIds")
+        .setValue(arr, getCompletionListener())
 }
 
 fun removeFavouriteDecks(deckId: String) {
