@@ -11,10 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sfuquizlet.Card
-import com.example.sfuquizlet.EditCardListener
-import com.example.sfuquizlet.EditCardPageActivity
-import com.example.sfuquizlet.R
+import com.example.sfuquizlet.*
 
 class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditCardListener) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), EditCardListener {
@@ -43,6 +40,7 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditC
             view.setOnClickListener {
                 // TODO: Update cards viewed count
                 onClickFlipCard()
+                addCardViewed(card.id)
             }
         }
 

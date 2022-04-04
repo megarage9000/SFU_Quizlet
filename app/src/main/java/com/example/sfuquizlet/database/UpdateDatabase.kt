@@ -1,5 +1,6 @@
 package com.example.sfuquizlet
 
+import android.util.Log
 import com.example.sfuquizlet.database.getUserFromDatabase
 
 // Functions to insert objects into database. Works for updating objects as well, as it will just overwrite the deck/card/flair with the same id
@@ -64,3 +65,26 @@ fun removeFavouriteDecks(deckId: String) {
     MainActivity.database.getReference("users").child(user.id).child("deckIds")
         .setValue(user.cardIds, getCompletionListener())
 }
+
+fun addCardViewed(cardId: String){
+    val user = MainActivity.auth.currentUser
+    var userViewedCardIds = arrayListOf<String>()
+
+    MainActivity.database.getReference("users").child(user!!.uid).child("cardsViewedIds").get().addOnSuccessListener {
+        if(it.exists()){
+            userViewedCardIds = it.value as ArrayList<String>
+
+            if(!userViewedCardIds.contains(cardId)) {
+                userViewedCardIds.add(cardId)
+            }
+
+            MainActivity.database.getReference("users").child(user!!.uid).child("cardsViewedIds")
+                .setValue(userViewedCardIds)
+        }
+    }
+
+
+
+}
+
+
