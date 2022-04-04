@@ -73,10 +73,7 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, Use
     }
 
     override fun onSavedDeckPressed(arr: ArrayList<String>) {
-        val view = binding.root
-        val favButton = view.findViewById<ToggleButton>(R.id.favouriteButton)
         addFavouriteDecks(arr)
-        Log.d("favbutton", "added deck")
     }
 
     override fun onReceivedFavouritesString(incomingArr: ArrayList<String>) {

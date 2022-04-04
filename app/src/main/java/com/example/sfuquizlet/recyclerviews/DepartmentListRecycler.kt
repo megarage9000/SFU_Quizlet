@@ -66,9 +66,9 @@ class DepartmentListRecycler(private val department: String,
                 // Set the on favourite button listener
                 saveButton.setOnClickListener {
                     var favDeckHolder: ArrayList<String> = favDeck
-                    favDeckHolder.add(deck.id)
+                    if(!favDeckHolder.contains(deck.id)) favDeckHolder.add(deck.id)
+                    else if(favDeck.contains(deck.id)) favDeckHolder.remove(deck.id)
                     viewListener.onSavedDeckPressed(favDeckHolder)
-                    Log.d("favbutton2", "clciked")
                 }
             }
         }
