@@ -24,7 +24,7 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, Use
     lateinit var binding: CourseListBinding
     lateinit var dialog: LoadingDialog
     lateinit var selectedDeck: Deck
-    lateinit var favArr: ArrayList<String>
+    var favArr = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dialog = LoadingDialog(requireContext())
