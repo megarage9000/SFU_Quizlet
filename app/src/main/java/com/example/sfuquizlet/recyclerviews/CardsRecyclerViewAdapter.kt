@@ -11,12 +11,9 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.sfuquizlet.Card
-import com.example.sfuquizlet.EditCardListener
-import com.example.sfuquizlet.EditCardPageActivity
-import com.example.sfuquizlet.R
+import com.example.sfuquizlet.*
 
-class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditCardListener) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
+class CardsRecyclerViewAdapter(var deckId: String, var cardIds: MutableList<String>, var cards: MutableList<Card>, val listener: EditCardListener) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), EditCardListener {
         private var isDisplayingQuestion = true
 
@@ -36,6 +33,15 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditC
             // Attach edit button listener
             editButton.setOnClickListener {
                 EditCardPageActivity.OpenEditCard(this.itemView.context, this.card, listener)
+            }
+
+            // Attach delete button listener
+            deleteButton.setOnClickListener {
+                // Find index of card from cards
+                removeCard(this.card)
+
+                // Remove card from database
+                deleteCard(deckId, this.card.id, cardIds)
             }
 
             // Toggle between question and answer
@@ -97,6 +103,7 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditC
 
     fun addCard(card: Card) {
         cards.add(0, card)
+        cardIds.add(card.id)
         notifyDataSetChanged()
     }
 
@@ -110,6 +117,20 @@ class CardsRecyclerViewAdapter(var cards: MutableList<Card>, val listener: EditC
 
         cards[index] = card
 
+
+        notifyDataSetChanged()
+    }
+
+    fun removeCard(card: Card) {
+        val index = findCardIndex(card)
+
+        if (index == -1) {
+            Log.i("SFUQuizlet", "Unable to update card")
+            return
+        }
+
+        cards.removeAt(index)
+        cardIds.removeIf { it == card.id }
 
         notifyDataSetChanged()
     }
