@@ -10,7 +10,7 @@
         android:layout_height="78dp"
         android:layout_marginVertical="5dp"
         android:background="@drawable/course_cardbg"
-        android:backgroundTint="#0E78CC"
+        android:backgroundTint="@color/blue"
         android:orientation="horizontal"
         android:paddingHorizontal="12dp"
         android:paddingVertical="12dp">
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/manrope_bold"
             android:gravity="center"
-            android:text="14 Cards"
+            android:text="0 Cards"
             android:textColor="#FFFFFF"
             android:textSize="24sp" />
     </LinearLayout>

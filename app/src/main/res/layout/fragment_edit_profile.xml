@@ -41,7 +41,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/flair_bg"
+        android:background="@drawable/edit_text_bg"
         android:ems="10"
         android:inputType="text"
         android:paddingHorizontal="16dp"
