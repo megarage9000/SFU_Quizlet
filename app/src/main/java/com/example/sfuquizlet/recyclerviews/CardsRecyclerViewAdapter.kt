@@ -12,6 +12,11 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.*
+import com.example.sfuquizlet.Card
+import com.example.sfuquizlet.EditCardListener
+import com.example.sfuquizlet.EditCardPageActivity
+import com.example.sfuquizlet.R
+import com.example.sfuquizlet.database.getUsernameFromId
 
 class CardsRecyclerViewAdapter(var deckId: String, var cardIds: MutableList<String>, var cards: MutableList<Card>, val listener: EditCardListener) : RecyclerView.Adapter<CardsRecyclerViewAdapter.ViewHolder>()  {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view), EditCardListener {
@@ -28,7 +33,7 @@ class CardsRecyclerViewAdapter(var deckId: String, var cardIds: MutableList<Stri
             // Populate card contents
             this.card = card
             questionTextView.text = this.card.question
-            authorTextView.text = "Added by ${this.card.authorId}"
+            getUsernameFromId(this.card.authorId, authorTextView)
 
             // Attach edit button listener
             editButton.setOnClickListener {
@@ -49,6 +54,7 @@ class CardsRecyclerViewAdapter(var deckId: String, var cardIds: MutableList<Stri
             view.setOnClickListener {
                 // TODO: Update cards viewed count
                 onClickFlipCard()
+                addCardViewed(card.id)
             }
         }
 

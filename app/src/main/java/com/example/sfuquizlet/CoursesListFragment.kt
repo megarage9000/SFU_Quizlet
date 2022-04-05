@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ToggleButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.sfuquizlet.database.UserFavouritesListener
 import com.example.sfuquizlet.database.getUserFavouritesString
@@ -23,7 +24,7 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, Use
     lateinit var binding: CourseListBinding
     lateinit var dialog: LoadingDialog
     lateinit var selectedDeck: Deck
-    lateinit var favArr: ArrayList<String>
+    var favArr = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         dialog = LoadingDialog(requireContext())
@@ -71,14 +72,8 @@ class CoursesListFragment : Fragment(), DecksListener, CardDeckViewListener, Use
             .commit()
     }
 
-    override fun onSavedDeckPressed(deck: Deck) {
-        val view = binding.root
-        val favButton = view.findViewById<Button>(R.id.favouriteButton)
-        favButton.setOnClickListener {
-            favButton.setOnClickListener {
-                favButton.setSelected(true)
-            }
-        }
+    override fun onSavedDeckPressed(arr: ArrayList<String>) {
+        addFavouriteDecks(arr)
     }
 
     override fun onReceivedFavouritesString(incomingArr: ArrayList<String>) {

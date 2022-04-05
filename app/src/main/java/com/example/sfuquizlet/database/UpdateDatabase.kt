@@ -1,6 +1,8 @@
 package com.example.sfuquizlet
 
+import android.util.Log
 import com.example.sfuquizlet.database.getUserFromDatabase
+import com.google.firebase.auth.UserProfileChangeRequest
 
 // Functions to insert objects into database. Works for updating objects as well, as it will just overwrite the deck/card/flair with the same id
 
@@ -25,6 +27,9 @@ fun insertCard(card: Card, deckId: String, cardIds: MutableList<String>) {
         .child(deckId)
         .child("cardIds")
         .setValue(cardSet, getCompletionListener())
+
+    addCardAdded(card.id)
+    Log.d("asdf", "added" + card.id)
 }
 
 fun deleteCard(deckId: String, cardId: String, cardIds: MutableList<String>) {
@@ -56,6 +61,19 @@ fun updateUserViewedCards(cardViewedId: String) {
         .setValue(distinctList, getCompletionListener())
 }
 
+fun updateUsername(name: String) {
+    val user = MainActivity.auth.currentUser
+
+    MainActivity.database.getReference("users").child(user!!.uid).child("username")
+        .setValue(name, getCompletionListener())
+
+    val profileUpdate =  UserProfileChangeRequest.Builder()
+        .setDisplayName(name)
+        .build()
+
+    MainActivity.auth.currentUser!!.updateProfile(profileUpdate)
+}
+
 fun updateUserCreatedCards(cardId: String) {
     val user = getUserFromDatabase()
     user.cardIds.add(cardId)
@@ -64,12 +82,11 @@ fun updateUserCreatedCards(cardId: String) {
         .setValue(user.cardIds, getCompletionListener())
 }
 
-fun addFavouriteDecks(deckId: String) {
-    val user = getUserFromDatabase()
-    user.deckIds.add(deckId)
+fun addFavouriteDecks(arr: ArrayList<String>) {
+    val user = MainActivity.auth.currentUser
 
-    MainActivity.database.getReference("users").child(user.id).child("deckIds")
-        .setValue(user.cardIds, getCompletionListener())
+    MainActivity.database.getReference("users").child(user!!.uid).child("deckIds")
+        .setValue(arr, getCompletionListener())
 }
 
 fun removeFavouriteDecks(deckId: String) {
@@ -79,3 +96,42 @@ fun removeFavouriteDecks(deckId: String) {
     MainActivity.database.getReference("users").child(user.id).child("deckIds")
         .setValue(user.cardIds, getCompletionListener())
 }
+
+fun addCardViewed(cardId: String){
+    val user = MainActivity.auth.currentUser
+    var userViewedCardIds = arrayListOf<String>()
+
+    MainActivity.database.getReference("users").child(user!!.uid).child("cardsViewedIds").get().addOnSuccessListener {
+        if(it.exists()){
+            userViewedCardIds = it.value as ArrayList<String>
+
+            if(!userViewedCardIds.contains(cardId)) {
+                userViewedCardIds.add(cardId)
+            }
+
+            MainActivity.database.getReference("users").child(user!!.uid).child("cardsViewedIds")
+                .setValue(userViewedCardIds)
+        }
+    }
+}
+
+fun addCardAdded(cardId: String){
+    val user = MainActivity.auth.currentUser
+    var userCardAddedIds = arrayListOf<String>()
+
+    MainActivity.database.getReference("users").child(user!!.uid).child("cardIds").get().addOnSuccessListener {
+        if(it.exists()){
+            userCardAddedIds = it.value as ArrayList<String>
+
+            if(!userCardAddedIds.contains(cardId)) {
+                userCardAddedIds.add(cardId)
+            }
+            Log.d("asdf", "added" + userCardAddedIds)
+
+            MainActivity.database.getReference("users").child(user!!.uid).child("cardIds")
+                .setValue(userCardAddedIds)
+        }
+    }
+}
+
+
