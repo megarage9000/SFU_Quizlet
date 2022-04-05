@@ -37,16 +37,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editeditTextPersonName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@drawable/flair_bg"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:paddingHorizontal="16dp"
         android:paddingVertical="16dp"
-        android:text="larrynguyen#098"
+        android:text="Tommy Jones"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,16 +59,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/manrope_medium"
-        android:text="Your username will be followed by your user ID to keep usernames fexible but unique! This will be displayed on cards you create."
+        android:text="You can update your username by pressing the button below"
         android:textColor="@color/blue"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/editeditTextPersonName" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnUpdateProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
