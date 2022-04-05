@@ -1,15 +1,18 @@
 package com.example.sfuquizlet.recyclerviews
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.Deck
 import com.example.sfuquizlet.R
@@ -57,6 +60,13 @@ class DepartmentListRecycler(private val department: String,
                 numCards.text =
                     "${deck.cardIds.size} Cards"
 
+                // Setting the tint for background
+                // - src: https://www.codegrepper.com/code-examples/java/how+to+change+background+tint+color+programmatically+android
+                var drawable = DrawableCompat.wrap(view.background)
+                DrawableCompat.setTint(drawable, color.primary)
+                view.background = drawable
+
+
                 // The save button
                 val saveButton = view.findViewById<ToggleButton>(R.id.favouriteButton)
                 for(decks in favDeck){
@@ -70,6 +80,14 @@ class DepartmentListRecycler(private val department: String,
                     else if(favDeck.contains(deck.id)) favDeckHolder.remove(deck.id)
                     viewListener.onSavedDeckPressed(favDeckHolder)
                 }
+
+                // Darken the color of the text, button
+                val darkerColor = color.secondary
+                title.setTextColor(darkerColor)
+                numCards.setTextColor(darkerColor)
+
+                val bookmark = view.findViewById<ToggleButton>(R.id.favouriteButton)
+                bookmark.setBackgroundTintList(ColorStateList.valueOf(darkerColor));
             }
         }
 
