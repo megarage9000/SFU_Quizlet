@@ -2,6 +2,7 @@ package com.example.sfuquizlet
 
 import android.util.Log
 import com.example.sfuquizlet.database.getUserFromDatabase
+import com.google.firebase.auth.UserProfileChangeRequest
 
 // Functions to insert objects into database. Works for updating objects as well, as it will just overwrite the deck/card/flair with the same id
 
@@ -44,6 +45,19 @@ fun updateUserViewedCards(cardViewedId: String) {
 
     MainActivity.database.getReference("users").child(user.id).child("cardsViewedIds")
         .setValue(distinctList, getCompletionListener())
+}
+
+fun updateUsername(name: String) {
+    val user = MainActivity.auth.currentUser
+
+    MainActivity.database.getReference("users").child(user!!.uid).child("username")
+        .setValue(name, getCompletionListener())
+
+    val profileUpdate =  UserProfileChangeRequest.Builder()
+        .setDisplayName(name)
+        .build()
+
+    MainActivity.auth.currentUser!!.updateProfile(profileUpdate)
 }
 
 fun updateUserCreatedCards(cardId: String) {

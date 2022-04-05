@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 import com.google.firebase.auth.FirebaseAuth
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
 
         // Placeholder data until we setup sign up feature
-        const val EMAIL = "dashboardman@ayo.code"
+        const val EMAIL = "dashboardman7@ayo.code"
         const val NAME = "Sebastian Vettel"
         const val PASS = "StrongPass1234@"
 
@@ -94,6 +96,12 @@ class MainActivity : AppCompatActivity() {
             setNavBarActiveBtn(NavBarOptions.PROFILE)
             frameLayout.removeAllViews()
             frameLayout.addView(layoutInflator.inflate(R.layout.fragment_edit_profile, null))
+
+            findViewById<TextView>(R.id.editeditTextPersonName).text = auth.currentUser!!.displayName
+            findViewById<Button>(R.id.btnUpdateProfile).setOnClickListener {
+                updateUsername(findViewById<TextView>(R.id.editeditTextPersonName).text.toString())
+                toastMessage("Username Updated")
+            }
         }
     }
 
