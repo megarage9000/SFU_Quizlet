@@ -32,6 +32,20 @@ fun insertCard(card: Card, deckId: String, cardIds: MutableList<String>) {
     Log.d("asdf", "added" + card.id)
 }
 
+fun deleteCard(deckId: String, cardId: String, cardIds: MutableList<String>) {
+    // Remove card from cards
+    MainActivity.database.getReference("cards").child(cardId).removeValue()
+
+    // Prevent duplicates
+    val cardSet = cardIds.distinct().toList()
+
+    // Remove card from the associated deck
+    MainActivity.database.getReference("decks")
+        .child(deckId)
+        .child("cardIds")
+        .setValue(cardSet, getCompletionListener())
+}
+
 fun insertFlair(flair: Flair) {
     MainActivity.database.getReference("flairs").child(flair.id)
         .setValue(flair, getCompletionListener())

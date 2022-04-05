@@ -64,7 +64,7 @@ class StudyDeckFragment : Fragment(), EditCardListener {
 
         val cardsRecyclerView = view.findViewById<RecyclerView>(R.id.cards_recycler_view)
         val cards = mutableListOf<Card>()
-        cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(cards, this)
+        cardsRecyclerViewAdapter = CardsRecyclerViewAdapter(id!!, cardIds!!, cards, this)
         val llm = LinearLayoutManager(inflater.context)
         cardsRecyclerView.adapter = cardsRecyclerViewAdapter
         cardsRecyclerView.layoutManager = llm
