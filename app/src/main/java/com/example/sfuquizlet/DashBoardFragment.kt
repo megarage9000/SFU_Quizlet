@@ -75,8 +75,8 @@ class DashBoardFragment : Fragment(), CardDeckViewListener, DecksListener, Dashb
             .commit()
     }
 
-    override fun onSavedDeckPressed(deck: Deck) {
-
+    override fun onSavedDeckPressed(arr: ArrayList<String>) {
+        addFavouriteDecks(arr)
     }
 
 
