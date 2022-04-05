@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.sfuquizlet.database.getCardsFromDatabase
 import com.example.sfuquizlet.database.getUserFromDatabase
 import com.example.sfuquizlet.recyclerviews.CardsRecyclerViewAdapter
+import org.w3c.dom.Text
 import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneOffset
@@ -33,6 +34,7 @@ class StudyDeckFragment : Fragment(), EditCardListener {
     private var cardIds: ArrayList<String>? = null
 
     private lateinit var cardsRecyclerViewAdapter: CardsRecyclerViewAdapter
+    private lateinit var cardAmountTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +57,8 @@ class StudyDeckFragment : Fragment(), EditCardListener {
         val title = view.findViewById<TextView>(R.id.studyDeckTitle)
         title.text = "$department $courseNumber"
 
-        val cardAmount = view.findViewById<TextView>(R.id.studyDeckCardCount)
-        cardAmount.text = "$cardCount Cards"
+        cardAmountTextView = view.findViewById<TextView>(R.id.studyDeckCardCount)
+        cardAmountTextView.text = "$cardCount Cards"
 
         val addCardButton = view.findViewById<Button>(R.id.AddNewCard)
 
@@ -108,6 +110,10 @@ class StudyDeckFragment : Fragment(), EditCardListener {
 
             // Add to deck's list of card ids
             cardIds?.add(card.id)
+
+            // Update card count
+            cardCount = cardIds?.size
+            cardAmountTextView.text = "$cardCount Cards"
         }
         // The edit card page returned an edited card.
         // - For some reason edit an existing card already works??????
